@@ -12,7 +12,7 @@ class GetResponse extends AbstractJsonResponse
     protected $statusCode = Response::HTTP_OK;
 
     public static function create(
-        ?array $data,
+        ?array $data = null,
         mixed $error = null,
         array $headers = [],
     ): JsonResponseInterface {

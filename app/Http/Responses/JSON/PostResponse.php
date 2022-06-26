@@ -12,7 +12,7 @@ class PostResponse extends AbstractJsonResponse
     protected $statusCode = Response::HTTP_CREATED;
 
     public static function create(
-        ?array $data,
+        ?array $data = null,
         mixed $error = null,
         array $headers = [],
     ): JsonResponseInterface {

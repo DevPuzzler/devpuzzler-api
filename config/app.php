@@ -1,5 +1,6 @@
 <?php
 
+use App\Providers\BusCommandServiceProvider;
 use App\Providers\BusQueryServiceProvider;
 use Illuminate\Support\Facades\Facade;
 
@@ -201,6 +202,7 @@ return [
 
         /* CQS */
         BusQueryServiceProvider::class,
+        BusCommandServiceProvider::class,
 
     ],
 

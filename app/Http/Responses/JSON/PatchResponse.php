@@ -12,7 +12,7 @@ class PatchResponse extends AbstractJsonResponse
     protected $statusCode = Response::HTTP_NO_CONTENT;
 
     public static function create(
-        ?array $data,
+        ?array $data = null,
         mixed $error = null,
         array $headers = [],
     ): JsonResponseInterface {

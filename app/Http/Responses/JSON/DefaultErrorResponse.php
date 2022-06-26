@@ -32,7 +32,7 @@ class DefaultErrorResponse extends AbstractJsonResponse
     }
 
     public static function create(
-        ?array $data,
+        ?array $data = null,
         mixed $error = null,
         array $headers = [],
         ?int $customStatusCode = null,

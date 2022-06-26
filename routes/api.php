@@ -4,6 +4,11 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostCategoriesController;
 use Illuminate\Support\Facades\Route;
 
+
+/* POST CATEGORIES NO AUTH*/
+Route::get('post/categories', [PostCategoriesController::class, 'getPostCategoryCollection']);
+Route::get( 'post/categories/{id}', [PostCategoriesController::class, 'getPostCategory'] );
+
 Route::group(
     ['prefix' => 'auth'],
     function ( $router ) {
@@ -18,8 +23,8 @@ Route::group(
                 Route::post( 'me', [AuthController::class, 'me'] );
             }
         );
-});
 
-/* POST CATEGORIES */
-Route::get('post/categories', [PostCategoriesController::class, 'getPostCategoryCollection']);
-Route::get( 'post/categories/{id}', [PostCategoriesController::class, 'getPostCategory'] );
+        /* POST CATEGORIES AUTH */
+        Route::post('post/categories', [PostCategoriesController::class, 'createPostCategory']);
+        Route::delete('post/categories/{id}', [PostCategoriesController::class, 'deletePostCategory']);
+});
