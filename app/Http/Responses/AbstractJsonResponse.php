@@ -3,6 +3,8 @@
 namespace App\Http\Responses;
 
 use App\Interfaces\Responses\JsonResponseInterface;
+use App\Tools\ValueObjects\Responses\JsonResponseDataVO;
+use App\Tools\ValueObjects\Responses\JsonResponseErrorVO;
 use InvalidArgumentException;
 use App\Interfaces\Responses\{
     ResponseDataValueObjectInterface as ResponseContent,
@@ -17,6 +19,12 @@ abstract class AbstractJsonResponse extends JsonResponse implements JsonResponse
 
     /** Override in child or end up with error */
     protected $statusCode = null;
+
+    public abstract static function create(
+        ?array $data,
+        mixed $error,
+        array $headers = []
+    ): JsonResponseInterface;
 
     public function __construct(
         private readonly ResponseContent $responseContent,

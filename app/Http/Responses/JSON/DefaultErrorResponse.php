@@ -3,16 +3,11 @@
 namespace App\Http\Responses\JSON;
 
 use App\Http\Responses\AbstractJsonResponse;
-use App\Interfaces\Responses\{
+use App\Tools\ValueObjects\Responses\JsonResponseDataVO;
+use App\Tools\ValueObjects\Responses\JsonResponseErrorVO;
+use App\Interfaces\Responses\{JsonResponseInterface,
     ResponseDataValueObjectInterface as ResponseData,
-    ResponseErrorValueObjectInterface as ResponseError,
-    JsonResponseInterface
-};
-use App\Tools\ValueObjects\Responses\{
-    JsonResponseDataVO,
-    JsonResponseErrorVO
-};
-use Exception;
+    ResponseErrorValueObjectInterface as ResponseError};
 use Symfony\Component\HttpFoundation\Response;
 
 class DefaultErrorResponse extends AbstractJsonResponse
@@ -24,8 +19,8 @@ class DefaultErrorResponse extends AbstractJsonResponse
     public function __construct(
         ResponseData $responseData = null,
         ResponseError $responseError = null,
-        ?int $customStatusCode = null,
-        array $headers = []
+        array $headers = [],
+        ?int $customStatusCode = null
     ) {
         $this->statusCode = $customStatusCode ?? $this->statusCode;
 
@@ -36,14 +31,17 @@ class DefaultErrorResponse extends AbstractJsonResponse
         );
     }
 
-    public static function buildFromException(Exception $exception): JsonResponseInterface
-    {
+    public static function create(
+        ?array $data,
+        mixed $error = null,
+        array $headers = [],
+        ?int $customStatusCode = null,
+    ): JsonResponseInterface {
         return new self(
-            new JsonResponseDataVO(),
-            new JsonResponseErrorVO($exception->getMessage()),
-            $exception->getCode() === 0 ?
-                Response::HTTP_INTERNAL_SERVER_ERROR :
-                $exception->getCode()
+            new JsonResponseDataVO( $data ),
+            new JsonResponseErrorVO( $error ?? self::DEFAULT_ERROR_MESSAGE ),
+            $headers,
+            $customStatusCode
         );
     }
 }

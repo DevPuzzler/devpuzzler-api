@@ -1,5 +1,6 @@
 <?php
 
+use App\Providers\BusQueryServiceProvider;
 use Illuminate\Support\Facades\Facade;
 
 return [
@@ -197,6 +198,9 @@ return [
 
         /*  JWT AUTH */
         PHPOpenSourceSaver\JWTAuth\Providers\LaravelServiceProvider::class,
+
+        /* CQS */
+        BusQueryServiceProvider::class,
 
     ],
 
