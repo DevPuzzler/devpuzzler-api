@@ -18,5 +18,7 @@ class DatabaseSeeder extends Seeder
             User::COLUMN_NAME => 'Test User',
             User::COLUMN_EMAIL => 'test@test.test',
          ]);
+
+        $this->call(PostCategoriesSeeder::class);
     }
 }
