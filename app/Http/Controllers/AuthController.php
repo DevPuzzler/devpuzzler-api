@@ -3,42 +3,68 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
-use Illuminate\Http\Request;
+use App\Interfaces\Responses\JsonResponseInterface;
+use App\Http\Responses\JSON\{
+    DefaultErrorResponse,
+    PostResponse
+};
+use App\Tools\ValueObjects\Responses\{
+    JsonResponseDataVO,
+    JsonResponseErrorVO
+};
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
-    public function login(LoginRequest $request)
+    public function login(LoginRequest $request): JsonResponseInterface
     {
         if (! $token = auth()->attempt($request->validated())) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+
+            return new DefaultErrorResponse(
+                    new JsonResponseDataVO(),
+                    new JsonResponseErrorVO('Unauthorized'),
+                    Response::HTTP_UNAUTHORIZED
+                );
         }
 
         return $this->respondWithToken($token);
     }
 
-    public function me()
+    public function me(): JsonResponseInterface
     {
-        return response()->json(auth()->user());
+        return new PostResponse(
+            new JsonResponseDataVO([
+                'user' => auth()->user()
+            ]),
+            new JsonResponseErrorVO()
+        );
     }
 
-    public function logout()
+    public function logout(): JsonResponseInterface
     {
         auth()->logout();
-
-        return response()->json(['message' => 'Successfully logged out']);
+        return new PostResponse(
+            new JsonResponseDataVO([
+                'message' => 'Successfully logged out'
+            ]),
+            new JsonResponseErrorVO()
+        );
     }
 
-    public function refresh()
+    public function refresh(): JsonResponseInterface
     {
         return $this->respondWithToken(auth()->refresh());
     }
 
-    protected function respondWithToken($token)
+    protected function respondWithToken($token): JsonResponseInterface
     {
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
-        ]);
+        return new PostResponse(
+            new JsonResponseDataVO([
+                    'access_token' => $token,
+                    'token_type' => 'bearer',
+                    'expires_in' => auth()->factory()->getTTL() * 60
+                ]),
+            new JsonResponseErrorVO()
+        );
     }
 }
