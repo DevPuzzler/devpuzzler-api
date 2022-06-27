@@ -23,8 +23,13 @@ Route::group(
                 Route::post( 'me', [AuthController::class, 'me'] );
             }
         );
+});
 
+Route::group(
+    ['middleware' => 'auth:api'],
+    function($router) {
         /* POST CATEGORIES AUTH */
         Route::post('post/categories', [PostCategoriesController::class, 'createPostCategory']);
         Route::delete('post/categories/{id}', [PostCategoriesController::class, 'deletePostCategory']);
-});
+    }
+);

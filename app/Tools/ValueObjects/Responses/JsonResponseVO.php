@@ -2,19 +2,18 @@
 
 namespace App\Tools\ValueObjects\Responses;
 
-use App\Interfaces\Responses\{
-    ResponseDataValueObjectInterface as ResponseContent,
-    ResponseErrorValueObjectInterface as ResponseError
-};
+use App\Interfaces\Responses\{JsonResponseValueObjectInterface,
+    ResponseDataValueObjectInterface as ResponseData,
+    ResponseErrorValueObjectInterface as ResponseError};
 
-class JsonResponseVO
+class JsonResponseVO implements JsonResponseValueObjectInterface
 {
     public const PARAM_SUCCESS = 'success';
     public const PARAM_DATA = 'data';
     public const PARAM_ERROR = 'error';
 
     public function __construct(
-        private readonly ResponseContent $responseContent,
+        private readonly ResponseData $responseData,
         private readonly ResponseError   $responseError,
         private readonly ?bool $isSuccessResponse = null,
     ) {}
@@ -22,9 +21,9 @@ class JsonResponseVO
     /**
      * 'data' parameter for response content
      */
-    public function getResponseContent(): ResponseContent
+    public function getResponseData(): ResponseData
     {
-        return $this->responseContent;
+        return $this->responseData;
     }
 
     public function getResponseError(): ResponseError
@@ -41,8 +40,8 @@ class JsonResponseVO
     {
         return [
             self::PARAM_SUCCESS => $this->getIsSuccessResponse(),
-            self::PARAM_DATA => $this->responseContent->getValue(),
-            self::PARAM_ERROR => $this->responseError->getValue(),
+            self::PARAM_DATA => $this->getResponseData()->getValue(),
+            self::PARAM_ERROR => $this->getResponseError()->getValue(),
         ];
     }
 }

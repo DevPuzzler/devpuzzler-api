@@ -3,14 +3,12 @@
 namespace App\Http\Responses;
 
 use App\Interfaces\Responses\JsonResponseInterface;
-use App\Tools\ValueObjects\Responses\JsonResponseDataVO;
-use App\Tools\ValueObjects\Responses\JsonResponseErrorVO;
 use InvalidArgumentException;
 use App\Interfaces\Responses\{
-    ResponseDataValueObjectInterface as ResponseContent,
+    ResponseDataValueObjectInterface as ResponseData,
     ResponseErrorValueObjectInterface as ResponseError
 };
-use App\Tools\ValueObjects\Responses\JsonResponseVO as JsonResponseData;
+use App\Tools\ValueObjects\Responses\JsonResponseVO;
 use Symfony\Component\HttpFoundation\{JsonResponse, Response};
 
 abstract class AbstractJsonResponse extends JsonResponse implements JsonResponseInterface
@@ -27,7 +25,7 @@ abstract class AbstractJsonResponse extends JsonResponse implements JsonResponse
     ): JsonResponseInterface;
 
     public function __construct(
-        private readonly ResponseContent $responseContent,
+        private readonly ResponseData $responseData,
         private readonly ResponseError   $responseError,
         array $headers = []
     ) {
@@ -49,10 +47,10 @@ abstract class AbstractJsonResponse extends JsonResponse implements JsonResponse
         return $this->statusCode;
     }
 
-    public function getResponseData(): JsonResponseData
+    public function getResponseData(): JsonResponseVO
     {
-        return new JsonResponseData (
-            $this->responseContent,
+        return new JsonResponseVO (
+            $this->responseData,
             $this->responseError,
             $this->isSuccessResponse()
         );
