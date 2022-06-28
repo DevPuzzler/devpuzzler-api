@@ -1,8 +1,8 @@
 <?php
 
-namespace App\CQ\Queries\Query\PostCategories;
+namespace App\CQ\Queries\Query\BlogPost;
 
-class GetPostCategoryQuery
+class GetBlogPostQuery
 {
     public function __construct(
         private readonly int $id

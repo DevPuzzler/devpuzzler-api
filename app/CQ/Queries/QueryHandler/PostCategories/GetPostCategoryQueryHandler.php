@@ -8,6 +8,6 @@ use App\Models\PostCategories;
 class GetPostCategoryQueryHandler
 {
     public function __invoke(GetPostCategoryQuery $query) {
-        return PostCategories::findOrFail($query->getPostCategoryId());
+        return PostCategories::findOrFail($query->getId());
     }
 }
