@@ -2,7 +2,22 @@
 
 namespace App\CQ\Queries\Query\BlogPost;
 
-class GetBlogPostCollectionQuery
-{
-    public function __construct() {}
+use App\CQ\Queries\Query\AbstractCollectionQuery;
+use App\Interfaces\CQ\Queries\Query\BlogPost\BlogPostCollectionInterface;
+
+class GetBlogPostCollectionQuery extends AbstractCollectionQuery implements BlogPostCollectionInterface {
+
+    public function __construct(
+        ?int $limit = null,
+        ?string $orderBy = null,
+        ?string $sortOrder = null,
+        private readonly bool $isIncludeCategory = false
+    ) {
+        parent::__construct($limit, $orderBy, $sortOrder);
+    }
+
+    public function getIsIncludeCategory(): bool
+    {
+        return $this->isIncludeCategory;
+    }
 }
