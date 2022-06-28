@@ -37,8 +37,8 @@ class BlogPost extends Model
     public function category(): HasOne
     {
         return $this->hasOne(
-            PostCategories::class,
-            PostCategories::COLUMN_ID,
+            PostCategory::class,
+            PostCategory::COLUMN_ID,
             self::COLUMN_CATEGORY_ID
         );
     }

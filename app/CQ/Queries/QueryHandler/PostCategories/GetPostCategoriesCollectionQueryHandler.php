@@ -4,7 +4,7 @@ namespace App\CQ\Queries\QueryHandler\PostCategories;
 
 use App\Enums\CollectionRulesEnum;
 use App\Interfaces\CQ\Queries\Query\PostCategory\PostCategoryCollectionInterface;
-use App\Models\PostCategories;
+use App\Models\PostCategory;
 use Illuminate\Database\Eloquent\Collection;
 
 class GetPostCategoriesCollectionQueryHandler
@@ -13,9 +13,9 @@ class GetPostCategoriesCollectionQueryHandler
     {
 
         if ( $query->getIsIncludePosts() ) {
-            $postCategories = PostCategories::with('blogPosts');
+            $postCategories = PostCategory::with('blogPosts');
         } else {
-            $postCategories = PostCategories::where([]);
+            $postCategories = PostCategory::where([]);
         }
 
         if ( null !== ( $orderBy = $query->getOrderBy() ) ) {

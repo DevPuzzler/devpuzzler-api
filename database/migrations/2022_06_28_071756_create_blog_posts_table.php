@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\BlogPost;
-use App\Models\PostCategories;
+use App\Models\PostCategory;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -23,7 +23,7 @@ return new class extends Migration
 
             $table
                 ->foreign(BlogPost::COLUMN_CATEGORY_ID)
-                ->references(PostCategories::COLUMN_ID)
+                ->references(PostCategory::COLUMN_ID)
                 ->on('post_categories');
         });
     }

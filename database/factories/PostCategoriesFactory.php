@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\PostCategories;
+use App\Models\PostCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,8 +18,8 @@ class PostCategoriesFactory extends Factory
     public function definition()
     {
         return [
-            PostCategories::COLUMN_NAME => $this->faker->colorName(),
-            PostCategories::COLUMN_DESCRIPTION => $this->faker->realText()
+            PostCategory::COLUMN_NAME => $this->faker->colorName(),
+            PostCategory::COLUMN_DESCRIPTION => $this->faker->realText()
         ];
     }
 }

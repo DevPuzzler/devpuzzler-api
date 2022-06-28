@@ -4,7 +4,7 @@ namespace App\CQ\Commands\CommandHandler\PostCategories;
 
 use App\CQ\Commands\Command\PostCategories\DeletePostCategoryCommand;
 use App\Exceptions\PostCategoryException;
-use App\Models\PostCategories;
+use App\Models\PostCategory;
 
 class DeletePostCategoryCommandHandler
 {
@@ -13,8 +13,8 @@ class DeletePostCategoryCommandHandler
      */
     public function __invoke(DeletePostCategoryCommand $command): void
     {
-        if ( null !== ( $postCategory = PostCategories::find(
-            $command->getRequest()->validated( PostCategories::COLUMN_ID )))
+        if ( null !== ( $postCategory = PostCategory::find(
+            $command->getRequest()->validated( PostCategory::COLUMN_ID )))
         ) {
             $postCategory->delete();
         } else {

@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Models\PostCategories;
+use App\Models\PostCategory;
 use Illuminate\Foundation\Http\FormRequest;
 
 class DeletePostCategoryRequest extends FormRequest
@@ -15,14 +15,14 @@ class DeletePostCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            PostCategories::COLUMN_ID => 'required|int|exists:post_categories,id'
+            PostCategory::COLUMN_ID => 'required|int|exists:post_categories,id'
         ];
     }
 
     public function all( $keys = null ): array
     {
         $data = parent::all();
-        $data[PostCategories::COLUMN_ID] = $this->route(PostCategories::COLUMN_ID);
+        $data[PostCategory::COLUMN_ID] = $this->route(PostCategory::COLUMN_ID);
 
         return $data;
     }

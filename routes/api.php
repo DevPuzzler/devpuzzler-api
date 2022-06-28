@@ -2,13 +2,13 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlogPostController;
-use App\Http\Controllers\PostCategoriesController;
+use App\Http\Controllers\PostCategoryController;
 use Illuminate\Support\Facades\Route;
 
 
 /* POST CATEGORIES NO AUTH */
-Route::get('posts/categories', [PostCategoriesController::class, 'getPostCategoryCollection']);
-Route::get( 'posts/categories/{id}', [PostCategoriesController::class, 'getPostCategory'] );
+Route::get('posts/categories', [PostCategoryController::class, 'getPostCategoryCollection']);
+Route::get( 'posts/categories/{id}', [PostCategoryController::class, 'getPostCategory'] );
 
 /* BLOG POST NO AUTH */
 Route::get('posts/{id}', [BlogPostController::class, 'getBlogPost']);
@@ -34,7 +34,7 @@ Route::group(
     ['middleware' => 'auth:api'],
     function($router) {
         /* POST CATEGORIES AUTH */
-        Route::post('posts/categories', [PostCategoriesController::class, 'createPostCategory']);
-        Route::delete('posts/categories/{id}', [PostCategoriesController::class, 'deletePostCategory']);
+        Route::post('posts/categories', [PostCategoryController::class, 'createPostCategory']);
+        Route::delete('posts/categories/{id}', [PostCategoryController::class, 'deletePostCategory']);
     }
 );

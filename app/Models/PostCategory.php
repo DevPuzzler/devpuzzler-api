@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class PostCategories extends Model
+class PostCategory extends Model
 {
     use HasFactory, SoftDeletes;
 

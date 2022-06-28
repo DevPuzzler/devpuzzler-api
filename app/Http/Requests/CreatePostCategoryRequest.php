@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Models\PostCategories;
+use App\Models\PostCategory;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreatePostCategoryRequest extends FormRequest
@@ -10,8 +10,8 @@ class CreatePostCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            PostCategories::COLUMN_NAME => 'required|string|min:4',
-            PostCategories::COLUMN_DESCRIPTION => 'required|string'
+            PostCategory::COLUMN_NAME => 'required|string|min:4',
+            PostCategory::COLUMN_DESCRIPTION => 'required|string'
         ];
     }
 }

@@ -16,7 +16,7 @@ use App\Http\Responses\JSON\{GetResponse, DefaultErrorResponse, PatchResponse, P
 use Exception;
 use Symfony\Component\HttpFoundation\Response;
 
-class PostCategoriesController extends Controller
+class PostCategoryController extends Controller
 {
     public function getPostCategoryCollection( PostCategoryCollectionRequest $request ): JsonResponseInterface
     {
