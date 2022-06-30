@@ -2,11 +2,11 @@
 
 namespace App\Providers;
 
+use App\CQ\Commands\Command\BlogPost\DeleteBlogPostCommand;
 use App\CQ\Commands\Command\BlogPost\UpsertBlogPostCommand;
-use App\CQ\Commands\Command\BlogPost\UpdateBlogPostCommand;
 use App\CQ\Commands\Command\PostCategory\DeletePostCategoryCommand;
+use App\CQ\Commands\CommandHandler\BlogPost\DeleteBlogPostCommandHandler;
 use App\CQ\Commands\CommandHandler\BlogPost\UpsertBlogPostCommandHandler;
-use App\CQ\Commands\CommandHandler\BlogPost\UpdateBlogPostCommandHandler;
 use App\CQ\Commands\CommandHandler\PostCategory\CreatePostCategoryCommandHandler;
 use App\CQ\Commands\Command\PostCategory\CreatePostCategoryCommand;
 use App\CQ\Commands\CommandHandler\PostCategory\DeletePostCategoryCommandHandler;
@@ -24,7 +24,7 @@ class BusCommandServiceProvider extends ServiceProvider
 
             /* BLOG POST */
             UpsertBlogPostCommand::class => UpsertBlogPostCommandHandler::class,
-            UpdateBlogPostCommand::class => UpdateBlogPostCommandHandler::class,
+            DeleteBlogPostCommand::class => DeleteBlogPostCommandHandler::class,
         ]);
     }
 }

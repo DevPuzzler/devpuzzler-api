@@ -39,5 +39,6 @@ Route::group(
 
         /* BLOG POST AUTH */
         Route::post('posts', [BlogPostController::class, 'upsertBlogPost']);
+        Route::delete('posts/{id}', [BlogPostController::class, 'deleteBlogPost']);
     }
 );
