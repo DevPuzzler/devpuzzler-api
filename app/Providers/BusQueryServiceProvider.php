@@ -6,9 +6,9 @@ use App\CQ\Queries\Query\BlogPost\GetBlogPostCollectionQuery;
 use App\CQ\Queries\Query\BlogPost\GetBlogPostQuery;
 use App\CQ\Queries\QueryHandler\BlogPost\GetBlogPostCollectionQueryHandler;
 use App\CQ\Queries\QueryHandler\BlogPost\GetBlogPostQueryHandler;
-use App\CQ\Queries\Query\PostCategories\{
+use App\CQ\Queries\Query\PostCategory\{
     GetPostCategoryQuery,
-    GetPostCategoriesCollectionQuery,
+    GetPostCategoryCollectionQuery,
 };
 use App\CQ\Queries\QueryHandler\PostCategories\{
     GetPostCategoryQueryHandler,
@@ -23,7 +23,7 @@ class BusQueryServiceProvider extends ServiceProvider
     {
         Bus::map([
             /* POST CATEGORIES */
-            GetPostCategoriesCollectionQuery::class => GetPostCategoriesCollectionQueryHandler::class,
+            GetPostCategoryCollectionQuery::class => GetPostCategoriesCollectionQueryHandler::class,
             GetPostCategoryQuery::class => GetPostCategoryQueryHandler::class,
 
             /* BLOG POSTS */

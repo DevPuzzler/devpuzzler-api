@@ -1,11 +1,11 @@
 <?php
 
-namespace App\CQ\Queries\Query\PostCategories;
+namespace App\CQ\Queries\Query\PostCategory;
 
 use App\CQ\Queries\Query\AbstractCollectionQuery;
 use App\Interfaces\CQ\Queries\Query\PostCategory\PostCategoryCollectionInterface;
 
-class GetPostCategoriesCollectionQuery extends AbstractCollectionQuery implements PostCategoryCollectionInterface
+class GetPostCategoryCollectionQuery extends AbstractCollectionQuery implements PostCategoryCollectionInterface
 {
     public function __construct(
         ?int $limit = null,
@@ -17,7 +17,7 @@ class GetPostCategoriesCollectionQuery extends AbstractCollectionQuery implement
         parent::__construct($limit, $orderBy, $sortOrder);
     }
 
-    public function getIsIncludePosts(): ?bool
+    public function getIsIncludePosts(): bool
     {
         return $this->isIncludePosts;
     }

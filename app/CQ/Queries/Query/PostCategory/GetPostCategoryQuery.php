@@ -1,6 +1,6 @@
 <?php
 
-namespace App\CQ\Queries\Query\PostCategories;
+namespace App\CQ\Queries\Query\PostCategory;
 
 class GetPostCategoryQuery
 {

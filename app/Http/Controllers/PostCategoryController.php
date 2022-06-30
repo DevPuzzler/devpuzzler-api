@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\CQ\Commands\Command\PostCategory\UpsertPostCategoryCommand;
 use App\CQ\Commands\Command\PostCategory\DeletePostCategoryCommand;
-use App\CQ\Queries\Query\PostCategories\GetPostCategoriesCollectionQuery;
-use App\CQ\Queries\Query\PostCategories\GetPostCategoryQuery;
+use App\CQ\Queries\Query\PostCategory\GetPostCategoryCollectionQuery;
+use App\CQ\Queries\Query\PostCategory\GetPostCategoryQuery;
 use App\Enums\CollectionRulesEnum;
 use App\Http\Requests\PostCategory\UpsertPostCategoryRequest;
 use App\Http\Requests\PostCategory\DeletePostCategoryRequest;
@@ -24,7 +24,7 @@ class PostCategoryController extends Controller
         try {
             return GetResponse::create(
                 $this->dispatch(
-                    new GetPostCategoriesCollectionQuery(
+                    new GetPostCategoryCollectionQuery(
                         $request->validated( CollectionRulesEnum::LIMIT->value ),
                         $request->validated( CollectionRulesEnum::ORDER_BY->value ),
                         $request->validated( CollectionRulesEnum::SORT_ORDER->value ),

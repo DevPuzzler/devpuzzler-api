@@ -2,7 +2,7 @@
 
 namespace App\CQ\Queries\QueryHandler\PostCategories;
 
-use App\CQ\Queries\Query\PostCategories\GetPostCategoryQuery;
+use App\CQ\Queries\Query\PostCategory\GetPostCategoryQuery;
 use App\Models\PostCategory;
 
 class GetPostCategoryQueryHandler
