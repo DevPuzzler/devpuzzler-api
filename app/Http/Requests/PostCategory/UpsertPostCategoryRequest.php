@@ -5,7 +5,7 @@ namespace App\Http\Requests\PostCategory;
 use App\Models\PostCategory;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreatePostCategoryRequest extends FormRequest
+class UpsertPostCategoryRequest extends FormRequest
 {
     public function rules()
     {

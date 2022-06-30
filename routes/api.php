@@ -34,7 +34,7 @@ Route::group(
     ['middleware' => 'auth:api'],
     function($router) {
         /* POST CATEGORIES AUTH */
-        Route::post('posts/categories', [PostCategoryController::class, 'createPostCategory']);
+        Route::post('posts/categories', [PostCategoryController::class, 'upsertPostCategory']);
         Route::delete('posts/categories/{id}', [PostCategoryController::class, 'deletePostCategory']);
 
         /* BLOG POST AUTH */

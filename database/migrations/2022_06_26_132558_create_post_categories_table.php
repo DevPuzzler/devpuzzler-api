@@ -16,8 +16,8 @@ return new class extends Migration
     {
         Schema::create('post_categories', function (Blueprint $table) {
             $table->id();
-            $table->string(PostCategory::COLUMN_NAME);
-            $table->tinyText(PostCategory::COLUMN_DESCRIPTION);
+            $table->string(PostCategory::COLUMN_NAME)->unique()->nullable(false);
+            $table->tinyText(PostCategory::COLUMN_DESCRIPTION)->nullable(false);
             $table->timestamps();
             $table->softDeletes();
         });

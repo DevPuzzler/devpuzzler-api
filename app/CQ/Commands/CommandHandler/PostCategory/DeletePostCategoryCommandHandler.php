@@ -18,7 +18,7 @@ class DeletePostCategoryCommandHandler
         ) {
             $postCategory->delete();
         } else {
-            throw new PostCategoryException('Post category not found or not active.');
+            throw new PostCategoryException('Post category not found or not active.', 422);
         }
     }
 }
