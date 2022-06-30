@@ -13,8 +13,7 @@ class DeletePostCategoryCommandHandler
      */
     public function __invoke(DeletePostCategoryCommand $command): void
     {
-        if ( null !== ( $postCategory = PostCategory::find(
-            $command->getRequest()->validated( PostCategory::COLUMN_ID )))
+        if ( null !== ( $postCategory = PostCategory::find( $command->getId() ) )
         ) {
             $postCategory->delete();
         } else {

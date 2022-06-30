@@ -2,16 +2,14 @@
 
 namespace App\CQ\Commands\Command\PostCategory;
 
-use App\Http\Requests\PostCategory\DeletePostCategoryRequest;
-
 class DeletePostCategoryCommand
 {
     public function __construct(
-        private readonly DeletePostCategoryRequest $request
+        private readonly int $id
     ) {}
 
-    public function getRequest(): DeletePostCategoryRequest
+    public function getId(): int
     {
-        return $this->request;
+        return $this->id;
     }
 }
