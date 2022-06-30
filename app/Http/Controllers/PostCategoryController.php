@@ -7,12 +7,12 @@ use App\CQ\Commands\Command\PostCategory\DeletePostCategoryCommand;
 use App\CQ\Queries\Query\PostCategories\GetPostCategoriesCollectionQuery;
 use App\CQ\Queries\Query\PostCategories\GetPostCategoryQuery;
 use App\Enums\CollectionRulesEnum;
-use App\Http\Requests\CreatePostCategoryRequest;
-use App\Http\Requests\DeletePostCategoryRequest;
+use App\Http\Requests\PostCategory\CreatePostCategoryRequest;
+use App\Http\Requests\PostCategory\DeletePostCategoryRequest;
 use App\Http\Requests\PostCategory\PostCategoryCollectionRequest;
+use App\Http\Responses\JSON\{DefaultErrorResponse, GetResponse, PatchResponse, PostResponse};
 use App\Interfaces\CQ\Queries\Query\PostCategory\PostCategoryCollectionInterface;
 use App\Interfaces\Responses\JsonResponseInterface;
-use App\Http\Responses\JSON\{GetResponse, DefaultErrorResponse, PatchResponse, PostResponse};
 use Exception;
 use Symfony\Component\HttpFoundation\Response;
 

@@ -2,7 +2,7 @@
 
 namespace App\CQ\Commands\Command\PostCategory;
 
-use App\Http\Requests\DeletePostCategoryRequest;
+use App\Http\Requests\PostCategory\DeletePostCategoryRequest;
 
 class DeletePostCategoryCommand
 {

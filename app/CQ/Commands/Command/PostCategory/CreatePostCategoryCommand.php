@@ -2,7 +2,7 @@
 
 namespace App\CQ\Commands\Command\PostCategory;
 
-use App\Http\Requests\CreatePostCategoryRequest;
+use App\Http\Requests\PostCategory\CreatePostCategoryRequest;
 
 class CreatePostCategoryCommand
 {

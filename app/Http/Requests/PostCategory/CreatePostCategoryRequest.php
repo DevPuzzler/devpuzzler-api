@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\PostCategory;
 
 use App\Models\PostCategory;
 use Illuminate\Foundation\Http\FormRequest;
