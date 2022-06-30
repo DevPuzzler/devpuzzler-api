@@ -108,6 +108,69 @@ class DefaultErrorResponseTest extends JsonResponseTest
         );
     }
 
+    public function testCreateFromExceptionReturnsJsonResponseInterface(): void
+    {
+        $this->sut = DefaultErrorResponse::createFromException(new Exception());
+
+        $this->assertInstanceOf(JsonResponseInterface::class, $this->sut);
+    }
+
+    public function testCreateFromExceptionReturnsMessageFromException(): void
+    {
+        $this->sut = DefaultErrorResponse::createFromException(
+            new Exception(self::EXCEPTION_CONTENT_TEXT)
+        );
+
+        $this->assertEquals(
+            self::EXCEPTION_CONTENT_TEXT,
+            $this->sut->getResponseData()->getResponseError()->getValue()
+        );
+    }
+
+    public function testCreateFromExceptionReturnsExceptionStatusCodeWhenNoCustomProvided(): void
+    {
+        $this->sut = DefaultErrorResponse::createFromException(
+            new Exception(
+                self::EXCEPTION_CONTENT_TEXT,
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            )
+        );
+
+        $this->assertEquals(
+            Response::HTTP_INTERNAL_SERVER_ERROR,
+            $this->sut->getStatusCode()
+        );
+    }
+
+    public function testCreateFromExceptionReturnsProvidedCustomStatusCodeWhenNoCodeGivenToException(): void
+    {
+        $this->sut = DefaultErrorResponse::createFromException(
+            new Exception(),
+            [],
+            Response::HTTP_UNPROCESSABLE_ENTITY
+        );
+
+        $this->assertEquals(
+            Response::HTTP_UNPROCESSABLE_ENTITY,
+            $this->sut->getStatusCode()
+        );
+    }
+
+    public function testCreateFromExceptionCustomStatusCodeTakesPriority(): void
+    {
+        $this->sut = DefaultErrorResponse::createFromException(
+            new Exception('', Response::HTTP_INTERNAL_SERVER_ERROR),
+            [],
+            Response::HTTP_UNPROCESSABLE_ENTITY
+        );
+
+        $this->assertEquals(
+            Response::HTTP_UNPROCESSABLE_ENTITY,
+            $this->sut->getStatusCode()
+        );
+
+    }
+
     protected function createInstanceViaStaticMethod(
         ?array $data = null,
         mixed $error = null,
