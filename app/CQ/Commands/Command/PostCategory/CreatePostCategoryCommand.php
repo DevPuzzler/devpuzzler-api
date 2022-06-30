@@ -1,6 +1,6 @@
 <?php
 
-namespace App\CQ\Commands\Command\PostCategories;
+namespace App\CQ\Commands\Command\PostCategory;
 
 use App\Http\Requests\CreatePostCategoryRequest;
 

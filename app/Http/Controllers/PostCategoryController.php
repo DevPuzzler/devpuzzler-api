@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\CQ\Commands\Command\PostCategories\CreatePostCategoryCommand;
-use App\CQ\Commands\Command\PostCategories\DeletePostCategoryCommand;
+use App\CQ\Commands\Command\PostCategory\CreatePostCategoryCommand;
+use App\CQ\Commands\Command\PostCategory\DeletePostCategoryCommand;
 use App\CQ\Queries\Query\PostCategories\GetPostCategoriesCollectionQuery;
 use App\CQ\Queries\Query\PostCategories\GetPostCategoryQuery;
 use App\Enums\CollectionRulesEnum;

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\CQ\Commands\CommandHandler\PostCategories;
+namespace App\CQ\Commands\CommandHandler\PostCategory;
 
-use App\CQ\Commands\Command\PostCategories\DeletePostCategoryCommand;
+use App\CQ\Commands\Command\PostCategory\DeletePostCategoryCommand;
 use App\Exceptions\PostCategoryException;
 use App\Models\PostCategory;
 

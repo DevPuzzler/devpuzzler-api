@@ -36,5 +36,8 @@ Route::group(
         /* POST CATEGORIES AUTH */
         Route::post('posts/categories', [PostCategoryController::class, 'createPostCategory']);
         Route::delete('posts/categories/{id}', [PostCategoryController::class, 'deletePostCategory']);
+
+        /* BLOG POST AUTH */
+        Route::post('posts', [BlogPostController::class, 'upsertBlogPost']);
     }
 );

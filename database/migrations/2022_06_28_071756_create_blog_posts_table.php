@@ -13,7 +13,7 @@ return new class extends Migration
         Schema::create('blog_posts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger(BlogPost::COLUMN_CATEGORY_ID);
-            $table->string(BlogPost::COLUMN_TITLE)->nullable(false);
+            $table->string(BlogPost::COLUMN_TITLE)->nullable(false)->unique();
             $table->tinyText(BlogPost::COLUMN_EXCERPT)->nullable(false);
             $table->mediumText(BlogPost::COLUMN_CONTENT);
             $table->boolean(BlogPost::COLUMN_IS_ACTIVE)->default(false);

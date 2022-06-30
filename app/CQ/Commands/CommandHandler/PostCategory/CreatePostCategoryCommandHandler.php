@@ -1,8 +1,8 @@
 <?php
 
-namespace App\CQ\Commands\CommandHandler\PostCategories;
+namespace App\CQ\Commands\CommandHandler\PostCategory;
 
-use App\CQ\Commands\Command\PostCategories\CreatePostCategoryCommand;
+use App\CQ\Commands\Command\PostCategory\CreatePostCategoryCommand;
 use App\Models\PostCategory;
 
 class CreatePostCategoryCommandHandler
