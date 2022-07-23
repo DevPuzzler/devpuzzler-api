@@ -26,6 +26,7 @@ class PostCategoryController extends Controller
                 $this->dispatch(
                     new GetPostCategoryCollectionQuery(
                         $request->validated( CollectionParamsEnum::LIMIT->value ),
+                        $request->validated( CollectionParamsEnum::OFFSET->value ),
                         $request->validated( CollectionParamsEnum::ORDER_BY->value ),
                         $request->validated( CollectionParamsEnum::SORT_ORDER->value ),
                         $request->validated( PostCategoryCollectionInterface::PARAM_INCLUDE_POSTS, false )
