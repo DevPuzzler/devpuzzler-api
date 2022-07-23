@@ -22,7 +22,7 @@ class GenericCollectionRequest extends FormRequest
              CollectionRules::SORT_ORDER->value => [
                  Rule::in( CollectionRules::getSortOrderArray() )
              ],
-            CollectionRules::OFFSET->value => ['int', 'min:1']
+            CollectionRules::OFFSET->value => ['int', 'min:0']
         ];
     }
 
