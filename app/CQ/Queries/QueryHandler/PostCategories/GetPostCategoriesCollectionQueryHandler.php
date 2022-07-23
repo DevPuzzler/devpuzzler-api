@@ -2,7 +2,7 @@
 
 namespace App\CQ\Queries\QueryHandler\PostCategories;
 
-use App\Enums\CollectionRulesEnum;
+use App\Enums\CollectionParamsEnum;
 use App\Interfaces\CQ\Queries\Query\PostCategory\PostCategoryCollectionInterface;
 use App\Models\PostCategory;
 use Illuminate\Database\Eloquent\Collection;
@@ -21,9 +21,9 @@ class GetPostCategoriesCollectionQueryHandler
         if ( null !== ( $orderBy = $query->getOrderBy() ) ) {
             $postCategories->orderBy(
                 $orderBy,
-                CollectionRulesEnum::DESC->value === $query->getSortOrder() ?
+                CollectionParamsEnum::DESC->value === $query->getSortOrder() ?
                     $query->getSortOrder() :
-                    CollectionRulesEnum::ASC->value
+                    CollectionParamsEnum::ASC->value
             );
         }
 

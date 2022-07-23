@@ -28,6 +28,7 @@ class GetBlogPostCollectionQueryTest extends CollectionQueryTest
     {
         $this->sut = $this->getSutInstance(
             self::MOCK_LIMIT,
+            self::MOCK_OFFSET,
             self::MOCK_ORDER_BY,
             self::MOCK_SORT_ORDER,
             true
@@ -38,12 +39,14 @@ class GetBlogPostCollectionQueryTest extends CollectionQueryTest
 
     protected function getSutInstance(
         ?int $limit = null,
+        ?int $offset = null,
         ?string $orderBy = null,
         ?string $sortOrder = null,
         bool $isIncludeCategory = false
     ): GetBlogPostCollectionQuery {
         return new GetBlogPostCollectionQuery(
             $limit,
+            $offset,
             $orderBy,
             $sortOrder,
             $isIncludeCategory

@@ -2,12 +2,13 @@
 
 namespace App\Enums;
 
-enum CollectionRulesEnum: string
+enum CollectionParamsEnum: string
 {
     case ASC = 'asc';
     case DESC = 'desc';
 
     case LIMIT = 'limit';
+    case OFFSET = 'offset';
     case ORDER_BY = 'orderBy';
     case SORT_ORDER = 'sortOrder';
 

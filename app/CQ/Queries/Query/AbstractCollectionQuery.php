@@ -8,6 +8,7 @@ abstract class AbstractCollectionQuery implements CollectionQueryInterface
 {
     public function __construct(
         private readonly ?int $limit = null,
+        private readonly ?int $offset = null,
         private readonly ?string $orderBy = null,
         private readonly ?string $sortOrder = null,
     ) {}
@@ -15,6 +16,11 @@ abstract class AbstractCollectionQuery implements CollectionQueryInterface
     public function getLimit(): ?int
     {
         return $this->limit;
+    }
+
+    public function getOffset(): ?int
+    {
+        return $this->offset;
     }
 
     public function getOrderBy(): ?string

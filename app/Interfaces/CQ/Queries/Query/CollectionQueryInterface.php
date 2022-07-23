@@ -6,6 +6,8 @@ interface CollectionQueryInterface {
 
     public function getLimit(): ?int;
 
+    public function getOffset(): ?int;
+
     public function getOrderBy(): ?string;
 
     public function getSortOrder(): ?string;

@@ -6,7 +6,7 @@ use App\CQ\Commands\Command\BlogPost\DeleteBlogPostCommand;
 use App\CQ\Commands\Command\BlogPost\UpsertBlogPostCommand;
 use App\CQ\Queries\Query\BlogPost\GetBlogPostCollectionQuery;
 use App\CQ\Queries\Query\BlogPost\GetBlogPostQuery;
-use App\Enums\CollectionRulesEnum;
+use App\Enums\CollectionParamsEnum;
 use App\Http\Requests\BlogPost\BlogPostCollectionRequest;
 use App\Http\Requests\BlogPost\DeleteBlogPostRequest;
 use App\Http\Requests\BlogPost\UpsertBlogPostRequest;
@@ -38,9 +38,10 @@ class BlogPostController extends Controller
             return GetResponse::create(
                 $this->dispatch(
                     new GetBlogPostCollectionQuery(
-                        $request->validated( CollectionRulesEnum::LIMIT->value ),
-                        $request->validated( CollectionRulesEnum::ORDER_BY->value ),
-                        $request->validated( CollectionRulesEnum::SORT_ORDER->value ),
+                        $request->validated( CollectionParamsEnum::LIMIT->value ),
+                        $request->validated( CollectionParamsEnum::OFFSET->value ),
+                        $request->validated( CollectionParamsEnum::ORDER_BY->value ),
+                        $request->validated( CollectionParamsEnum::SORT_ORDER->value ),
                         $request->validated( BlogPostCollectionInterface::PARAM_INCLUDE_CATEGORY, false )
                     )
                 )->toArray()

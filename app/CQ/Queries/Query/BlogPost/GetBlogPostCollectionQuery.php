@@ -9,11 +9,12 @@ class GetBlogPostCollectionQuery extends AbstractCollectionQuery implements Blog
 {
     public function __construct(
         ?int $limit = null,
+        ?int $offset = null,
         ?string $orderBy = null,
         ?string $sortOrder = null,
         private readonly bool $isIncludeCategory = false
     ) {
-        parent::__construct( $limit, $orderBy, $sortOrder );
+        parent::__construct( $limit, $offset, $orderBy, $sortOrder );
     }
 
     public function getIsIncludeCategory(): bool

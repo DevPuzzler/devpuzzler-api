@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Enums\CollectionRulesEnum as CollectionRules;
+use App\Enums\CollectionParamsEnum as CollectionRules;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -21,7 +21,8 @@ class GenericCollectionRequest extends FormRequest
              ],
              CollectionRules::SORT_ORDER->value => [
                  Rule::in( CollectionRules::getSortOrderArray() )
-             ]
+             ],
+            CollectionRules::OFFSET->value => ['int', 'min:1']
         ];
     }
 

@@ -2,7 +2,7 @@
 
 namespace App\CQ\Queries\QueryHandler\BlogPost;
 
-use App\Enums\CollectionRulesEnum;
+use App\Enums\CollectionParamsEnum;
 use App\Interfaces\CQ\Queries\Query\BlogPost\BlogPostCollectionInterface;
 use App\Models\BlogPost;
 use Illuminate\Database\Eloquent\Collection;
@@ -20,14 +20,18 @@ class GetBlogPostCollectionQueryHandler
         if ( null !== ( $orderBy = $query->getOrderBy() ) ) {
             $blogPosts->orderBy(
                 $orderBy,
-                CollectionRulesEnum::DESC->value === $query->getSortOrder() ?
+                CollectionParamsEnum::DESC->value === $query->getSortOrder() ?
                     $query->getSortOrder() :
-                    CollectionRulesEnum::ASC->value
+                    CollectionParamsEnum::ASC->value
             );
         }
 
         if ( null !== ( $limit = $query->getLimit() ) ) {
             $blogPosts->limit($limit);
+        }
+
+        if ( null !== ($offset = $query->getOffset()) ) {
+            $blogPosts->offset($offset);
         }
 
         return $blogPosts->get();

@@ -8,6 +8,7 @@ use Tests\TestCase;
 abstract class CollectionQueryTest extends TestCase
 {
     public const MOCK_LIMIT = 1;
+    public const MOCK_OFFSET = 2;
     public const MOCK_ORDER_BY = 'created_at';
     public const MOCK_SORT_ORDER = 'asc';
 
@@ -15,6 +16,7 @@ abstract class CollectionQueryTest extends TestCase
 
     protected abstract function getSutInstance(
         ?int $limit = null,
+        ?int $offset = null,
         ?string $orderBy = null,
         ?string $sortOrder = null,
     ): CollectionQueryInterface;
@@ -24,6 +26,7 @@ abstract class CollectionQueryTest extends TestCase
         $this->sut = $this->getSutInstance();
 
         $this->assertNull( $this->sut->getLimit() );
+        $this->assertNull( $this->sut->getOffset() );
         $this->assertNull( $this->sut->getOrderBy() );
         $this->assertNull( $this->sut->getSortOrder() );
     }
@@ -33,6 +36,7 @@ abstract class CollectionQueryTest extends TestCase
         $this->sut = $this->getSutInstance();
 
         $this->assertTrue( method_exists( $this->sut, 'getLimit' ) );
+        $this->assertTrue( method_exists( $this->sut, 'getOffset' ) );
         $this->assertTrue( method_exists( $this->sut, 'getOrderBy' ) );
         $this->assertTrue( method_exists( $this->sut, 'getSortOrder' ) );
     }
@@ -44,10 +48,21 @@ abstract class CollectionQueryTest extends TestCase
         $this->assertEquals( self::MOCK_LIMIT, $this->sut->getLimit() );
     }
 
+    public function testGetOffsetReturnsValueProvidedInConstructor(): void
+    {
+        $this->sut = $this->getSutInstance(
+            self::MOCK_LIMIT,
+            self::MOCK_OFFSET
+        );
+
+        $this->assertEquals( self::MOCK_OFFSET, $this->sut->getOffset() );
+    }
+
     public function testGetOrderByReturnsValueProvidedInConstructor(): void
     {
         $this->sut = $this->getSutInstance(
             self::MOCK_LIMIT,
+            self::MOCK_OFFSET,
             self::MOCK_ORDER_BY
         );
 
@@ -58,6 +73,7 @@ abstract class CollectionQueryTest extends TestCase
     {
         $this->sut = $this->getSutInstance(
             self::MOCK_LIMIT,
+            self::MOCK_OFFSET,
             self::MOCK_ORDER_BY,
             self::MOCK_SORT_ORDER
         );
