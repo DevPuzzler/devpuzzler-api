@@ -7,6 +7,7 @@ use Tests\Unit\CQ\Queries\Query\CollectionQueryTest;
 
 class GetBlogPostCollectionQueryTest extends CollectionQueryTest
 {
+    public const MOCK_CATEGORY_ID = 123;
 
     public function testSutMethodsReturnDefaultValuesWhenNoParamsProvided(): void
     {
@@ -37,19 +38,42 @@ class GetBlogPostCollectionQueryTest extends CollectionQueryTest
         $this->assertTrue( $this->sut->getIsIncludeCategory() );
     }
 
+    public function testGetCategoryIdReturnsValueProvidedInConstructor(): void
+    {
+        $this->sut = $this->getSutInstance(
+            self::MOCK_LIMIT,
+            self::MOCK_OFFSET,
+            self::MOCK_ORDER_BY,
+            self::MOCK_SORT_ORDER,
+            true,
+            self::MOCK_CATEGORY_ID,
+        );
+
+        $this->assertTrue( $this->sut->getIsIncludeCategory() );
+    }
+
+    public function testGetCategoryIdReturnsNullWhenNoValueInConstructor(): void
+    {
+        $this->sut = $this->getSutInstance();
+
+        $this->assertNull( $this->sut->getCategoryId() );
+    }
+
     protected function getSutInstance(
         ?int $limit = null,
         ?int $offset = null,
         ?string $orderBy = null,
         ?string $sortOrder = null,
-        bool $isIncludeCategory = false
+        bool $isIncludeCategory = false,
+        ?int $categoryId = null,
     ): GetBlogPostCollectionQueryQuery {
         return new GetBlogPostCollectionQueryQuery(
             $limit,
             $offset,
             $orderBy,
             $sortOrder,
-            $isIncludeCategory
+            $isIncludeCategory,
+            $categoryId,
         );
     }
 
