@@ -5,7 +5,6 @@ namespace App\Http\Requests\BlogPost;
 use App\Http\Requests\GenericCollectionRequest;
 use App\Interfaces\CQ\Queries\Query\BlogPost\BlogPostCollectionQueryInterface;
 use App\Models\BlogPost;
-use App\Models\PostCategory;
 
 class BlogPostCollectionRequest extends GenericCollectionRequest
 {

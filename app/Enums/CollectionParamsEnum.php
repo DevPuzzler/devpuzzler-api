@@ -9,8 +9,8 @@ enum CollectionParamsEnum: string
 
     case LIMIT = 'limit';
     case OFFSET = 'offset';
-    case ORDER_BY = 'orderBy';
-    case SORT_ORDER = 'sortOrder';
+    case ORDER_BY = 'order_by';
+    case SORT_ORDER = 'sort_order';
 
     public static function getSortOrderArray(): array
     {
