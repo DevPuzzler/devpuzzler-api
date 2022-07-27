@@ -1,6 +1,6 @@
 <?php
 
-namespace App\CQ\Queries\QueryHandler\PostCategories;
+namespace App\CQ\Queries\QueryHandler\PostCategory;
 
 use App\CQ\Queries\Query\PostCategory\GetPostCategoryQuery;
 use App\Models\PostCategory;

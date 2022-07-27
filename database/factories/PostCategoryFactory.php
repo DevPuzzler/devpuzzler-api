@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends Factory
  */
-class PostCategoriesFactory extends Factory
+class PostCategoryFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,7 +18,7 @@ class PostCategoriesFactory extends Factory
     public function definition()
     {
         return [
-            PostCategory::COLUMN_NAME => $this->faker->colorName(),
+            PostCategory::COLUMN_NAME => $this->faker->unique()->colorName(),
             PostCategory::COLUMN_DESCRIPTION => $this->faker->realText()
         ];
     }

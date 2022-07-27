@@ -1,13 +1,13 @@
 <?php
 
-namespace App\CQ\Queries\QueryHandler\PostCategories;
+namespace App\CQ\Queries\QueryHandler\PostCategory;
 
 use App\Enums\CollectionParamsEnum;
 use App\Interfaces\CQ\Queries\Query\PostCategory\PostCategoryCollectionQueryInterface;
 use App\Models\PostCategory;
 use Illuminate\Database\Eloquent\Collection;
 
-class GetPostCategoriesCollectionQueryHandler
+class GetPostCategoryCollectionQueryHandler
 {
     public function __invoke(PostCategoryCollectionQueryInterface $query ): Collection
     {

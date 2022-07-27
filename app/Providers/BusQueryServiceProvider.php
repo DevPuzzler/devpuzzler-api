@@ -10,9 +10,9 @@ use App\CQ\Queries\Query\PostCategory\{
     GetPostCategoryQuery,
     GetPostCategoryCollectionQuery,
 };
-use App\CQ\Queries\QueryHandler\PostCategories\{
+use App\CQ\Queries\QueryHandler\PostCategory\{
     GetPostCategoryQueryHandler,
-    GetPostCategoriesCollectionQueryHandler
+    GetPostCategoryCollectionQueryHandler
 };
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\ServiceProvider;
@@ -23,7 +23,7 @@ class BusQueryServiceProvider extends ServiceProvider
     {
         Bus::map([
             /* POST CATEGORIES */
-            GetPostCategoryCollectionQuery::class => GetPostCategoriesCollectionQueryHandler::class,
+            GetPostCategoryCollectionQuery::class => GetPostCategoryCollectionQueryHandler::class,
             GetPostCategoryQuery::class => GetPostCategoryQueryHandler::class,
 
             /* BLOG POSTS */

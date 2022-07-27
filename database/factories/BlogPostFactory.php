@@ -14,7 +14,7 @@ class BlogPostFactory extends Factory
     public function definition(): array
     {
         return [
-            BlogPost::COLUMN_TITLE => $this->faker->word(),
+            BlogPost::COLUMN_TITLE => $this->faker->unique()->word(),
             BlogPost::COLUMN_EXCERPT => $this->faker->text(),
             BlogPost::COLUMN_CATEGORY_ID => PostCategory::
                 all()

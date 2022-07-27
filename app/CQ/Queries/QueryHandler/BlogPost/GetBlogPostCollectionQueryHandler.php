@@ -20,7 +20,7 @@ class GetBlogPostCollectionQueryHandler
 
         $this->addCategoryIdToQuery($blogPosts, $query);
 
-        if ( null !== ( $orderBy = $query->getOrderBy() ) ) {
+        if ( ( $orderBy = $query->getOrderBy() ) ) {
             $blogPosts->orderBy(
                 $orderBy,
                 CollectionParamsEnum::DESC->value === $query->getSortOrder() ?
@@ -29,12 +29,12 @@ class GetBlogPostCollectionQueryHandler
             );
         }
 
-        if ( null !== ( $limit = $query->getLimit() ) ) {
+        if ( ( $limit = $query->getLimit() ) ) {
             $blogPosts->limit($limit);
-        }
 
-        if ( null !== ($offset = $query->getOffset()) ) {
-            $blogPosts->offset($offset);
+            if ( ($offset = $query->getOffset()) ) {
+                $blogPosts->offset($offset);
+            }
         }
 
         return $blogPosts->get();
@@ -42,8 +42,12 @@ class GetBlogPostCollectionQueryHandler
 
     public function addCategoryIdToQuery( Builder &$queryBuilder, BlogPostCollectionQueryInterface $query ): void
     {
-        if ( $query->getCategoryId() ) {
-            $queryBuilder->where(BlogPost::COLUMN_CATEGORY_ID, '=', $query->getCategoryId());
+        if ( ( $categoryId = $query->getCategoryId() ) ) {
+            $queryBuilder->where(
+                BlogPost::COLUMN_CATEGORY_ID,
+                '=',
+                $categoryId
+            );
         }
     }
 }
