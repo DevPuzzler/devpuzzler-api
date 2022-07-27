@@ -5,7 +5,7 @@ namespace App\CQ\Queries\Query\BlogPost;
 use App\CQ\Queries\Query\AbstractCollectionQuery;
 use App\Interfaces\CQ\Queries\Query\BlogPost\BlogPostCollectionQueryInterface;
 
-class GetBlogPostCollectionQueryQuery extends AbstractCollectionQuery implements BlogPostCollectionQueryInterface
+class GetBlogPostCollectionQuery extends AbstractCollectionQuery implements BlogPostCollectionQueryInterface
 {
     public function __construct(
         ?int $limit = null,

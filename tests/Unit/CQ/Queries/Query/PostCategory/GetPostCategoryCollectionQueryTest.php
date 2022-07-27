@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\CQ\Queries\Query\PostCategory;
 
-use App\CQ\Queries\Query\PostCategory\GetPostCategoryCollectionQueryQuery;
+use App\CQ\Queries\Query\PostCategory\GetPostCategoryCollectionQuery;
 use Tests\Unit\CQ\Queries\Query\CollectionQueryTest;
 
 class GetPostCategoryCollectionQueryTest extends CollectionQueryTest
@@ -43,8 +43,8 @@ class GetPostCategoryCollectionQueryTest extends CollectionQueryTest
         ?string $orderBy = null,
         ?string $sortOrder = null,
         bool $isIncludePosts = false
-    ): GetPostCategoryCollectionQueryQuery {
-        return new GetPostCategoryCollectionQueryQuery(
+    ): GetPostCategoryCollectionQuery {
+        return new GetPostCategoryCollectionQuery(
             $limit,
             $offset,
             $orderBy,

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\CQ\Commands\Command\BlogPost\DeleteBlogPostCommand;
 use App\CQ\Commands\Command\BlogPost\UpsertBlogPostCommand;
-use App\CQ\Queries\Query\BlogPost\GetBlogPostCollectionQueryQuery;
+use App\CQ\Queries\Query\BlogPost\GetBlogPostCollectionQuery;
 use App\CQ\Queries\Query\BlogPost\GetBlogPostQuery;
 use App\Enums\CollectionParamsEnum;
 use App\Http\Requests\BlogPost\BlogPostCollectionRequest;
@@ -17,7 +17,6 @@ use App\Http\Responses\JSON\PostResponse;
 use App\Interfaces\CQ\Queries\Query\BlogPost\BlogPostCollectionQueryInterface;
 use App\Interfaces\Responses\JsonResponseInterface;
 use App\Models\BlogPost;
-use App\Models\PostCategory;
 use Exception;
 
 class BlogPostController extends Controller
@@ -38,7 +37,7 @@ class BlogPostController extends Controller
         try {
             return GetResponse::create(
                 $this->dispatch(
-                    new GetBlogPostCollectionQueryQuery(
+                    new GetBlogPostCollectionQuery(
                         $request->validated( CollectionParamsEnum::LIMIT->value ),
                         $request->validated( CollectionParamsEnum::OFFSET->value ),
                         $request->validated( CollectionParamsEnum::ORDER_BY->value ),

@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\CQ\Queries\Query\BlogPost;
 
-use App\CQ\Queries\Query\BlogPost\GetBlogPostCollectionQueryQuery;
+use App\CQ\Queries\Query\BlogPost\GetBlogPostCollectionQuery;
 use Tests\Unit\CQ\Queries\Query\CollectionQueryTest;
 
 class GetBlogPostCollectionQueryTest extends CollectionQueryTest
@@ -66,8 +66,8 @@ class GetBlogPostCollectionQueryTest extends CollectionQueryTest
         ?string $sortOrder = null,
         bool $isIncludeCategory = false,
         ?int $categoryId = null,
-    ): GetBlogPostCollectionQueryQuery {
-        return new GetBlogPostCollectionQueryQuery(
+    ): GetBlogPostCollectionQuery {
+        return new GetBlogPostCollectionQuery(
             $limit,
             $offset,
             $orderBy,
