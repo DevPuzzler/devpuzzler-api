@@ -3,7 +3,9 @@
 namespace App\Http\Requests\BlogPost;
 
 use App\Http\Requests\GenericCollectionRequest;
-use App\Interfaces\CQ\Queries\Query\BlogPost\BlogPostCollectionInterface;
+use App\Interfaces\CQ\Queries\Query\BlogPost\BlogPostCollectionQueryInterface;
+use App\Models\BlogPost;
+use App\Models\PostCategory;
 
 class BlogPostCollectionRequest extends GenericCollectionRequest
 {
@@ -17,7 +19,8 @@ class BlogPostCollectionRequest extends GenericCollectionRequest
     {
         return [
             ...$this->getCollectionRules(),
-            BlogPostCollectionInterface::PARAM_INCLUDE_CATEGORY => ['boolean']
+            BlogPostCollectionQueryInterface::PARAM_INCLUDE_CATEGORY => ['boolean'],
+            BlogPost::COLUMN_CATEGORY_ID => ['int'],
         ];
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Requests\PostCategory;
 
 use App\Http\Requests\GenericCollectionRequest;
-use App\Interfaces\CQ\Queries\Query\PostCategory\PostCategoryCollectionInterface;
+use App\Interfaces\CQ\Queries\Query\PostCategory\PostCategoryCollectionQueryInterface;
 
 class PostCategoryCollectionRequest extends GenericCollectionRequest
 {
@@ -11,7 +11,7 @@ class PostCategoryCollectionRequest extends GenericCollectionRequest
     {
         return [
             ...$this->getCollectionRules(),
-            PostCategoryCollectionInterface::PARAM_INCLUDE_POSTS => ['boolean']
+            PostCategoryCollectionQueryInterface::PARAM_INCLUDE_POSTS => ['boolean']
         ];
     }
 }

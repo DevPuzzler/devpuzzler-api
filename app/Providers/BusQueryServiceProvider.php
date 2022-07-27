@@ -2,13 +2,13 @@
 
 namespace App\Providers;
 
-use App\CQ\Queries\Query\BlogPost\GetBlogPostCollectionQuery;
+use App\CQ\Queries\Query\BlogPost\GetBlogPostCollectionQueryQuery;
 use App\CQ\Queries\Query\BlogPost\GetBlogPostQuery;
 use App\CQ\Queries\QueryHandler\BlogPost\GetBlogPostCollectionQueryHandler;
 use App\CQ\Queries\QueryHandler\BlogPost\GetBlogPostQueryHandler;
 use App\CQ\Queries\Query\PostCategory\{
     GetPostCategoryQuery,
-    GetPostCategoryCollectionQuery,
+    GetPostCategoryCollectionQueryQuery,
 };
 use App\CQ\Queries\QueryHandler\PostCategories\{
     GetPostCategoryQueryHandler,
@@ -23,12 +23,12 @@ class BusQueryServiceProvider extends ServiceProvider
     {
         Bus::map([
             /* POST CATEGORIES */
-            GetPostCategoryCollectionQuery::class => GetPostCategoriesCollectionQueryHandler::class,
+            GetPostCategoryCollectionQueryQuery::class => GetPostCategoriesCollectionQueryHandler::class,
             GetPostCategoryQuery::class => GetPostCategoryQueryHandler::class,
 
             /* BLOG POSTS */
             GetBlogPostQuery::class => GetBlogPostQueryHandler::class,
-            GetBlogPostCollectionQuery::class => GetBlogPostCollectionQueryHandler::class,
+            GetBlogPostCollectionQueryQuery::class => GetBlogPostCollectionQueryHandler::class,
         ]);
     }
 }

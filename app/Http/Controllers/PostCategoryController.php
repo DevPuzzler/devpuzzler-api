@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\CQ\Commands\Command\PostCategory\UpsertPostCategoryCommand;
 use App\CQ\Commands\Command\PostCategory\DeletePostCategoryCommand;
-use App\CQ\Queries\Query\PostCategory\GetPostCategoryCollectionQuery;
+use App\CQ\Queries\Query\PostCategory\GetPostCategoryCollectionQueryQuery;
 use App\CQ\Queries\Query\PostCategory\GetPostCategoryQuery;
 use App\Enums\CollectionParamsEnum;
 use App\Http\Requests\PostCategory\UpsertPostCategoryRequest;
@@ -12,7 +12,7 @@ use App\Http\Requests\PostCategory\DeletePostCategoryRequest;
 use App\Http\Requests\PostCategory\PostCategoryCollectionRequest;
 use App\Models\PostCategory;
 use App\Http\Responses\JSON\{DefaultErrorResponse, GetResponse, PatchResponse, PostResponse};
-use App\Interfaces\CQ\Queries\Query\PostCategory\PostCategoryCollectionInterface;
+use App\Interfaces\CQ\Queries\Query\PostCategory\PostCategoryCollectionQueryInterface;
 use App\Interfaces\Responses\JsonResponseInterface;
 use Exception;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,12 +24,12 @@ class PostCategoryController extends Controller
         try {
             return GetResponse::create(
                 $this->dispatch(
-                    new GetPostCategoryCollectionQuery(
+                    new GetPostCategoryCollectionQueryQuery(
                         $request->validated( CollectionParamsEnum::LIMIT->value ),
                         $request->validated( CollectionParamsEnum::OFFSET->value ),
                         $request->validated( CollectionParamsEnum::ORDER_BY->value ),
                         $request->validated( CollectionParamsEnum::SORT_ORDER->value ),
-                        $request->validated( PostCategoryCollectionInterface::PARAM_INCLUDE_POSTS, false )
+                        $request->validated( PostCategoryCollectionQueryInterface::PARAM_INCLUDE_POSTS, false )
                     )
                 )->toArray()
             );

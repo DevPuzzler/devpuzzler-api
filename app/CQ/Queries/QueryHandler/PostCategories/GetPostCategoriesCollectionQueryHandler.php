@@ -3,13 +3,13 @@
 namespace App\CQ\Queries\QueryHandler\PostCategories;
 
 use App\Enums\CollectionParamsEnum;
-use App\Interfaces\CQ\Queries\Query\PostCategory\PostCategoryCollectionInterface;
+use App\Interfaces\CQ\Queries\Query\PostCategory\PostCategoryCollectionQueryInterface;
 use App\Models\PostCategory;
 use Illuminate\Database\Eloquent\Collection;
 
 class GetPostCategoriesCollectionQueryHandler
 {
-    public function __invoke( PostCategoryCollectionInterface $query ): Collection
+    public function __invoke(PostCategoryCollectionQueryInterface $query ): Collection
     {
 
         if ( $query->getIsIncludePosts() ) {

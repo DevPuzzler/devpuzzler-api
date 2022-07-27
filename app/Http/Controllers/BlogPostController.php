@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\CQ\Commands\Command\BlogPost\DeleteBlogPostCommand;
 use App\CQ\Commands\Command\BlogPost\UpsertBlogPostCommand;
-use App\CQ\Queries\Query\BlogPost\GetBlogPostCollectionQuery;
+use App\CQ\Queries\Query\BlogPost\GetBlogPostCollectionQueryQuery;
 use App\CQ\Queries\Query\BlogPost\GetBlogPostQuery;
 use App\Enums\CollectionParamsEnum;
 use App\Http\Requests\BlogPost\BlogPostCollectionRequest;
@@ -14,9 +14,10 @@ use App\Http\Responses\JSON\DefaultErrorResponse;
 use App\Http\Responses\JSON\DeleteResponse;
 use App\Http\Responses\JSON\GetResponse;
 use App\Http\Responses\JSON\PostResponse;
-use App\Interfaces\CQ\Queries\Query\BlogPost\BlogPostCollectionInterface;
+use App\Interfaces\CQ\Queries\Query\BlogPost\BlogPostCollectionQueryInterface;
 use App\Interfaces\Responses\JsonResponseInterface;
 use App\Models\BlogPost;
+use App\Models\PostCategory;
 use Exception;
 
 class BlogPostController extends Controller
@@ -37,12 +38,13 @@ class BlogPostController extends Controller
         try {
             return GetResponse::create(
                 $this->dispatch(
-                    new GetBlogPostCollectionQuery(
+                    new GetBlogPostCollectionQueryQuery(
                         $request->validated( CollectionParamsEnum::LIMIT->value ),
                         $request->validated( CollectionParamsEnum::OFFSET->value ),
                         $request->validated( CollectionParamsEnum::ORDER_BY->value ),
                         $request->validated( CollectionParamsEnum::SORT_ORDER->value ),
-                        $request->validated( BlogPostCollectionInterface::PARAM_INCLUDE_CATEGORY, false )
+                        $request->validated( BlogPostCollectionQueryInterface::PARAM_INCLUDE_CATEGORY, false ),
+                        $request->validated( BlogPost::COLUMN_CATEGORY_ID, false ),
                     )
                 )->toArray()
             );

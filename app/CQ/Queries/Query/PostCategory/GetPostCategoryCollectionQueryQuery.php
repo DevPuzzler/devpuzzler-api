@@ -3,9 +3,9 @@
 namespace App\CQ\Queries\Query\PostCategory;
 
 use App\CQ\Queries\Query\AbstractCollectionQuery;
-use App\Interfaces\CQ\Queries\Query\PostCategory\PostCategoryCollectionInterface;
+use App\Interfaces\CQ\Queries\Query\PostCategory\PostCategoryCollectionQueryInterface;
 
-class GetPostCategoryCollectionQuery extends AbstractCollectionQuery implements PostCategoryCollectionInterface
+class GetPostCategoryCollectionQueryQuery extends AbstractCollectionQuery implements PostCategoryCollectionQueryInterface
 {
     public function __construct(
         ?int $limit = null,
