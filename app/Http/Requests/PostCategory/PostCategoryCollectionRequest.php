@@ -11,7 +11,8 @@ class PostCategoryCollectionRequest extends GenericCollectionRequest
     {
         return [
             ...$this->getCollectionRules(),
-            PostCategoryCollectionQueryInterface::PARAM_INCLUDE_POSTS => ['boolean']
+            PostCategoryCollectionQueryInterface::PARAM_INCLUDE_POSTS => ['boolean'],
+            PostCategoryCollectionQueryInterface::PARAM_LIMIT_POSTS => ['int']
         ];
     }
 }

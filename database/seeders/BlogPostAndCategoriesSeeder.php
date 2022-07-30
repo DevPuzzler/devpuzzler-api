@@ -18,7 +18,7 @@ class BlogPostAndCategoriesSeeder extends Seeder
                             BlogPost::COLUMN_CATEGORY_ID => $postCategories->getAttribute(PostCategory::COLUMN_ID)
                         ];
                 }),
-            'blogPosts'
+            PostCategory::COLUMN_BLOG_POSTS
         )->create();
     }
 }

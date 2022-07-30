@@ -29,7 +29,13 @@ class PostCategoryController extends Controller
                         $request->validated( CollectionParamsEnum::OFFSET->value ),
                         $request->validated( CollectionParamsEnum::ORDER_BY->value ),
                         $request->validated( CollectionParamsEnum::SORT_ORDER->value ),
-                        $request->validated( PostCategoryCollectionQueryInterface::PARAM_INCLUDE_POSTS, false )
+                        $request->validated(
+                            PostCategoryCollectionQueryInterface::PARAM_INCLUDE_POSTS,
+                            false
+                        ),
+                        $request->validated(
+                            PostCategoryCollectionQueryInterface::PARAM_LIMIT_POSTS
+                        ),
                     )
                 )->toArray()
             );

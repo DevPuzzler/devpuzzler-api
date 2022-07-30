@@ -8,12 +8,15 @@ use Tests\Unit\CQ\Queries\Query\CollectionQueryTest;
 class GetPostCategoryCollectionQueryTest extends CollectionQueryTest
 {
 
+    public const MOCK_LIMIT_POSTS = 10;
+
     public function testSutMethodsReturnDefaultValuesWhenNoParamsProvided(): void
     {
         $this->sut = $this->getSutInstance();
 
         parent::testSutMethodsReturnDefaultValuesWhenNoParamsProvided();
         $this->assertFalse( $this->sut->getIsIncludePosts() );
+        $this->assertNull( $this->sut->getLimitPosts() );
     }
 
     public function testSutHasExpectedMethods(): void
@@ -22,6 +25,7 @@ class GetPostCategoryCollectionQueryTest extends CollectionQueryTest
 
         parent::testSutHasExpectedMethods();
         $this->assertTrue( method_exists( $this->sut, 'getIsIncludePosts' ) );
+        $this->assertTrue( method_exists( $this->sut, 'getLimitPosts' ) );
     }
 
     public function testGetIsIncludePostsReturnsValueProvidedInConstructor(): void
@@ -37,19 +41,36 @@ class GetPostCategoryCollectionQueryTest extends CollectionQueryTest
         $this->assertTrue( $this->sut->getIsIncludePosts() );
     }
 
+    public function testGetLimitPostsReturnsValueProvidedInConstructor(): void
+    {
+        $this->sut = $this->getSutInstance(
+            self::MOCK_LIMIT,
+            self::MOCK_OFFSET,
+            self::MOCK_ORDER_BY,
+            self::MOCK_SORT_ORDER,
+            true,
+            self::MOCK_LIMIT_POSTS
+
+        );
+
+        $this->assertEquals( self::MOCK_LIMIT_POSTS, $this->sut->getIsIncludePosts() );
+    }
+
     protected function getSutInstance(
         ?int $limit = null,
         ?int $offset = null,
         ?string $orderBy = null,
         ?string $sortOrder = null,
-        bool $isIncludePosts = false
+        bool $isIncludePosts = false,
+        ?int $limitPosts = null
     ): GetPostCategoryCollectionQuery {
         return new GetPostCategoryCollectionQuery(
             $limit,
             $offset,
             $orderBy,
             $sortOrder,
-            $isIncludePosts
+            $isIncludePosts,
+            $limitPosts
         );
     }
 

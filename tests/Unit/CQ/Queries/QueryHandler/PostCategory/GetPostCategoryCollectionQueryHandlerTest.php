@@ -21,6 +21,8 @@ class GetPostCategoryCollectionQueryHandlerTest extends TestCase
 {
     use RefreshDatabase;
 
+    public const POSTS_NUMBER = 2;
+
     private GetPostCategoryCollectionQueryHandler $sut;
     private PostCategoryCollectionQueryInterface|Mock $queryMock;
 
@@ -219,12 +221,58 @@ class GetPostCategoryCollectionQueryHandlerTest extends TestCase
         $this->assertTrue( $firstPostCategoryDate->gt($secondPostCategoryDate) );
     }
 
+    /**
+     * We make 2 posts per category so check if limit works with 1
+     */
+    public function testCollectionContainsOnlyParticularNumberOfPostsWhenParamProvided(): void
+    {
+        $this->seedCategoryWithBlogPosts();
+
+        $this->queryMock
+            ->expects($this->once())
+            ->method('getIsIncludePosts')
+            ->willReturn(true);
+        $this->queryMock
+            ->expects($this->once())
+            ->method('getLimitPosts')
+            ->willReturn(1);
+
+        $postCategories = $this->sut->__invoke($this->queryMock);
+        $postCategories->each( function (PostCategory $postCategory) {
+            $this->assertTrue(
+                $postCategory->getRelation(PostCategory::COLUMN_BLOG_POSTS)->count() <= 1
+            );
+            return true;
+        });
+
+    }
+
+    public function testCollectionReturnsAllPostsWhenNoLimitPostsParamProvided(): void
+    {
+        $this->seedCategoryWithBlogPosts();
+
+        $this->queryMock
+            ->expects($this->once())
+            ->method('getIsIncludePosts')
+            ->willReturn(true);
+
+        $postCategories = $this->sut->__invoke($this->queryMock);
+
+        $postCategories->map(function (PostCategory $postCategory) {
+            $this->assertCount(
+                self::POSTS_NUMBER,
+                $postCategory->getRelation(PostCategory::COLUMN_BLOG_POSTS)
+            );
+            return true;
+        });
+    }
+
     private function seedCategoryWithBlogPosts(): void
     {
         PostCategory::factory(1)
             ->has(
-                BlogPost::factory(2),
-                'blogPosts'
+                BlogPost::factory(self::POSTS_NUMBER),
+                PostCategory::COLUMN_BLOG_POSTS
             )->create();
     }
 }

@@ -12,7 +12,8 @@ class GetPostCategoryCollectionQuery extends AbstractCollectionQuery implements 
         ?int $offset = null,
         ?string $orderBy = null,
         ?string $sortOrder = null,
-        private readonly bool $isIncludePosts = false
+        private readonly bool $isIncludePosts = false,
+        private readonly ?int $limitPosts = null
     )
     {
         parent::__construct($limit, $offset, $orderBy, $sortOrder);
@@ -21,5 +22,10 @@ class GetPostCategoryCollectionQuery extends AbstractCollectionQuery implements 
     public function getIsIncludePosts(): bool
     {
         return $this->isIncludePosts;
+    }
+
+    public function getLimitPosts(): ?int
+    {
+        return $this->limitPosts;
     }
 }

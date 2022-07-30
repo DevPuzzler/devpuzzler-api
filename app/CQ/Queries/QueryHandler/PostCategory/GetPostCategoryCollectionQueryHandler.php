@@ -4,22 +4,20 @@ namespace App\CQ\Queries\QueryHandler\PostCategory;
 
 use App\Enums\CollectionParamsEnum;
 use App\Interfaces\CQ\Queries\Query\PostCategory\PostCategoryCollectionQueryInterface;
+use App\Models\BlogPost;
 use App\Models\PostCategory;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class GetPostCategoryCollectionQueryHandler
 {
-    public function __invoke(PostCategoryCollectionQueryInterface $query ): Collection
+    public function __invoke( PostCategoryCollectionQueryInterface $query ): Collection
     {
-
-        if ( $query->getIsIncludePosts() ) {
-            $postCategories = PostCategory::with('blogPosts');
-        } else {
-            $postCategories = PostCategory::where([]);
-        }
+        $queryBuilder = PostCategory::where([]);
 
         if ( null !== ( $orderBy = $query->getOrderBy() ) ) {
-            $postCategories->orderBy(
+            $queryBuilder->orderBy(
                 $orderBy,
                 CollectionParamsEnum::DESC->value === $query->getSortOrder() ?
                     $query->getSortOrder() :
@@ -28,9 +26,25 @@ class GetPostCategoryCollectionQueryHandler
         }
 
         if ( null !== ( $limit = $query->getLimit() ) ) {
-            $postCategories->limit($limit);
+            $queryBuilder
+                ->limit($limit)
+                ->offset($query->getOffset());
         }
 
-        return $postCategories->get();
+        $postCategories = $queryBuilder->get();
+
+        if ( $query->getIsIncludePosts() ) {
+            $postCategories->each( function (&$postCategory) use ($query) {
+                $postCategory->load(
+                    [
+                        PostCategory::COLUMN_BLOG_POSTS => function ($relationQueryBuilder) use ($query) {
+                            $relationQueryBuilder->limit( $query->getLimitPosts() );
+                        }
+                    ]
+                )->get();
+            });
+        }
+
+        return $postCategories;
     }
 }

@@ -14,9 +14,9 @@ class PostCategory extends Model
     public const COLUMN_ID = 'id';
     public const COLUMN_NAME = 'name';
     public const COLUMN_DESCRIPTION = 'description';
-    public const COLUMN_CREATED_AT = 'created_at';
-    public const COLUMN_UPDATED_AT = 'updated_at';
     public const COLUMN_DELETED_AT = 'deleted_at';
+    public const COLUMN_BLOG_POSTS = 'blog_posts';
+
 
     protected $fillable = [
         self::COLUMN_NAME,
@@ -28,7 +28,7 @@ class PostCategory extends Model
         self::COLUMN_DELETED_AT
     ];
 
-    public function blogPosts(): HasMany
+    public function blog_posts(): HasMany
     {
         return $this->hasMany(
             BlogPost::class,
