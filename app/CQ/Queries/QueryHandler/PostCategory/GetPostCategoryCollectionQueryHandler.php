@@ -37,8 +37,19 @@ class GetPostCategoryCollectionQueryHandler
             $postCategories->each( function (&$postCategory) use ($query) {
                 $postCategory->load(
                     [
-                        PostCategory::COLUMN_BLOG_POSTS => function ($relationQueryBuilder) use ($query) {
-                            $relationQueryBuilder->limit( $query->getLimitPosts() );
+                        PostCategory::COLUMN_BLOG_POSTS => function (HasMany $relationQueryBuilder) use ($query) {
+                            $relationQueryBuilder
+                                ->select([
+                                    BlogPost::COLUMN_ID,
+                                    BlogPost::COLUMN_CATEGORY_ID,
+                                    BlogPost::COLUMN_TITLE,
+                                    BlogPost::COLUMN_EXCERPT
+                                ])
+                                ->where([
+                                    BlogPost::COLUMN_IS_ACTIVE => 1,
+                                    BlogPost::COLUMN_IS_RESTRICTED => 0
+                                ])
+                                ->limit( $query->getLimitPosts() );
                         }
                     ]
                 )->get();
