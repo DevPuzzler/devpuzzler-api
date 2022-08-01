@@ -94,16 +94,6 @@ class GetPostCategoryCollectionQueryHandlerTest extends TestCase
         $this->assertEquals(1, $this->sut->__invoke($this->queryMock)->count());
     }
 
-    private function seedOnly2PostCategoriesWithSequence(array $firstRecordData = [], array $secondRecordData = []): void
-    {
-        PostCategory::factory(2)
-            ->state( new Sequence(
-                $firstRecordData,
-                    $secondRecordData,
-                )
-            )->create();
-    }
-
     public function testCollectionSortedASCWhenOnlyOrderByProvided(): void
     {
 
@@ -267,11 +257,28 @@ class GetPostCategoryCollectionQueryHandlerTest extends TestCase
         });
     }
 
+    private function seedOnly2PostCategoriesWithSequence(array $firstRecordData = [], array $secondRecordData = []): void
+    {
+        PostCategory::factory(2)
+            ->state( new Sequence(
+                    $firstRecordData,
+                    $secondRecordData,
+                )
+            )->create();
+    }
+
     private function seedCategoryWithBlogPosts(): void
     {
         PostCategory::factory(1)
             ->has(
-                BlogPost::factory(self::POSTS_NUMBER),
+                BlogPost::factory(self::POSTS_NUMBER)->state(
+                    new Sequence(
+                        [
+                            BlogPost::COLUMN_IS_RESTRICTED => 0,
+                            BlogPost::COLUMN_IS_ACTIVE => 1,
+                        ]
+                    )
+                ),
                 PostCategory::COLUMN_BLOG_POSTS
             )->create();
     }

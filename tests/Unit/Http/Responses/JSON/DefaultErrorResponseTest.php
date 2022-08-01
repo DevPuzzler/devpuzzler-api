@@ -5,6 +5,7 @@ namespace Tests\Unit\Http\Responses\JSON;
 use App\Http\Responses\AbstractJsonResponse;
 use App\Http\Responses\JSON\DefaultErrorResponse;
 use App\Interfaces\Responses\JsonResponseInterface;
+use Illuminate\Database\QueryException;
 use App\Tools\ValueObjects\Responses\{
     JsonResponseDataVO as JsonResponseContent,
     JsonResponseErrorVO as JsonResponseError
@@ -15,6 +16,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Validator;
 use InvalidArgumentException;
 use Mockery\Mock;
+use PDOException;
 use Symfony\Component\HttpFoundation\Response;
 
 class DefaultErrorResponseTest extends JsonResponseTest
@@ -169,6 +171,18 @@ class DefaultErrorResponseTest extends JsonResponseTest
             $this->sut->getStatusCode()
         );
 
+    }
+
+    public function testCreateFromExceptionFallbacksTo500StatusCodeWhenStatusCodeNotInt(): void
+    {
+
+        $this->sut = DefaultErrorResponse::createFromException(
+            new PDOException()
+        );
+
+        $this->assertEquals(
+            Response::HTTP_INTERNAL_SERVER_ERROR, $this->sut->getStatusCode()
+        );
     }
 
     protected function createInstanceViaStaticMethod(

@@ -9,6 +9,7 @@ use Exception;
 use App\Interfaces\Responses\{JsonResponseInterface,
     ResponseDataValueObjectInterface as ResponseData,
     ResponseErrorValueObjectInterface as ResponseError};
+use PDOException;
 use Symfony\Component\HttpFoundation\Response;
 
 class DefaultErrorResponse extends AbstractJsonResponse
@@ -53,6 +54,13 @@ class DefaultErrorResponse extends AbstractJsonResponse
     ): JsonResponseInterface {
 
         $statusCode = $customStatusCode ?? $e->getCode();
+
+        // PDOException throws code as string
+        if ( $e instanceof PDOException ) {
+            $statusCode = is_integer($statusCode) ?
+                $statusCode :
+                Response::HTTP_INTERNAL_SERVER_ERROR;
+        }
 
         return new self(
             new JsonResponseDataVO(),
