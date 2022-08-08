@@ -12,6 +12,7 @@ class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public const COLUMN_ID = 'id';
     public const COLUMN_NAME = 'name';
     public const COLUMN_EMAIL = 'email';
     public const COLUMN_PASSWORD = 'password';

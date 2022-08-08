@@ -18,6 +18,8 @@ use App\Interfaces\CQ\Queries\Query\BlogPost\BlogPostCollectionQueryInterface;
 use App\Interfaces\Responses\JsonResponseInterface;
 use App\Models\BlogPost;
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Symfony\Component\HttpFoundation\Response;
 
 class BlogPostController extends Controller
 {
@@ -25,8 +27,10 @@ class BlogPostController extends Controller
     {
         try {
             return GetResponse::create(
-                $this->dispatch( new GetBlogPostQuery($id) )->toArray()
+                $this->dispatch(new GetBlogPostQuery($id))->toArray()
             );
+        } catch(ModelNotFoundException $e) {
+            return DefaultErrorResponse::createFromException($e, [], Response::HTTP_NOT_FOUND);
         } catch ( Exception $e ) {
             return DefaultErrorResponse::createFromException($e);
         }

@@ -71,7 +71,7 @@ class PostCategoryController extends Controller
     public function deletePostCategory( DeletePostCategoryRequest $request ): JsonResponseInterface
     {
         try {
-            $this->dispatch( new DeletePostCategoryCommand( $request ) );
+            $this->dispatch( new DeletePostCategoryCommand( $request->validated(PostCategory::COLUMN_ID) ) );
             return PatchResponse::create();
         } catch ( Exception $e ) {
             return DefaultErrorResponse::createFromException( $e );

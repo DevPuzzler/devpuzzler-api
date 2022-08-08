@@ -18,7 +18,6 @@ class BlogPost extends Model
     public const COLUMN_CONTENT = 'content';
     public const COLUMN_IS_ACTIVE = 'is_active';
     public const COLUMN_IS_RESTRICTED = 'is_restricted';
-    public const COLUMN_UPDATED_AT = 'updated_at';
     public const COLUMN_DELETED_AT = 'deleted_at';
 
     protected $fillable = [
@@ -30,7 +29,6 @@ class BlogPost extends Model
     ];
 
     protected $hidden = [
-        self::COLUMN_UPDATED_AT,
         self::COLUMN_DELETED_AT
     ];
 
