@@ -11,6 +11,7 @@ class JsonResponseVO implements JsonResponseValueObjectInterface
     public const PARAM_SUCCESS = 'success';
     public const PARAM_DATA = 'data';
     public const PARAM_ERROR = 'error';
+    public const PARAM_MESSAGE = 'message';
 
     public function __construct(
         private readonly ResponseData $responseData,

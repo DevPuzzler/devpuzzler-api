@@ -28,4 +28,14 @@ abstract class AbstractFeatureTest extends TestCase
             JsonResponseVO::PARAM_ERROR,
         ]);
     }
+
+    protected function assertResponseUnauthenticated(
+        AssertableJson $json
+    ): AssertableJson {
+        return
+            $this
+                ->assertResponseJsonContainsSuccessErrorDataParams($json)
+                ->has(JsonResponseVO::PARAM_ERROR)
+                ->where(JsonResponseVO::PARAM_ERROR, 'Unauthenticated');
+    }
 }

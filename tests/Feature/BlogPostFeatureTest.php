@@ -553,17 +553,13 @@ class BlogPostFeatureTest extends AbstractFeatureTest
         );
     }
 
-    /**
-     * TODO: Update it once response gets unified form
-     */
     public function testUpsertBlogPostRequiresAuthentication(): void
     {
         $this
             ->post('/api/posts', self::MOCK_BLOG_POST)
             ->assertUnauthorized()
             ->assertJson( fn (AssertableJson $json) =>
-                $json->has('message')
-                ->where('message', 'Unauthenticated.')
+                $this->assertResponseUnauthenticated($json)
             );
     }
 

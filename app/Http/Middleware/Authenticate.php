@@ -2,7 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Responses\JSON\DefaultErrorResponse;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Symfony\Component\HttpFoundation\Response;
 
 class Authenticate extends Middleware
 {
@@ -17,5 +20,17 @@ class Authenticate extends Middleware
         if (! $request->expectsJson()) {
             return route('login');
         }
+    }
+
+    protected function unauthenticated($request, array $guards)
+    {
+        throw new HttpResponseException(
+            DefaultErrorResponse::create(
+                null,
+                'Unauthenticated',
+                [],
+                Response::HTTP_UNAUTHORIZED
+            )
+        );
     }
 }
