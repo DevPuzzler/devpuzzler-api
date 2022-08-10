@@ -11,6 +11,8 @@ class BlogPost extends Model
 {
     use HasFactory, SoftDeletes;
 
+    public const TABLE_NAME = 'blog_posts';
+
     public const COLUMN_ID = 'id';
     public const COLUMN_TITLE = 'title';
     public const COLUMN_EXCERPT = 'excerpt';

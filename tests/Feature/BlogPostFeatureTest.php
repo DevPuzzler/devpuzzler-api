@@ -581,7 +581,35 @@ class BlogPostFeatureTest extends AbstractFeatureTest
                         $json->hasAll(...array_keys(self::MOCK_BLOG_POST))
                     )
             );
+    }
 
+    public function testUpsertUpdatesExistingBlogPost(): void
+    {
+        PostCategory::factory()->create([
+            PostCategory::COLUMN_ID => 1
+        ]);
+        $blogPost = BlogPost::factory()->create(self::MOCK_BLOG_POST);
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $blogPost->setAttribute(BlogPost::COLUMN_CONTENT, '<h2>UPDATED</h2>');
+
+        $this
+            ->post(
+                '/api/posts',
+                $blogPost->toArray()
+            )
+            ->assertCreated()->assertJson(fn (AssertableJson $json) =>
+                $this
+                    ->assertResponseJsonContainsSuccessErrorDataParams($json)
+                ->has(JsonResponseVO::PARAM_DATA, fn (AssertableJson $json) =>
+                    $json->has(BlogPost::COLUMN_ID)
+                    ->where(BlogPost::COLUMN_ID, $blogPost->getAttribute(BlogPost::COLUMN_ID))
+                )
+            );
+        $this->assertDatabaseHas(BlogPost::TABLE_NAME, [
+            'title' => $blogPost->getAttribute(BlogPost::COLUMN_TITLE),
+            'content' => $blogPost->getAttribute(BlogPost::COLUMN_CONTENT),
+        ]);
     }
 
     protected function assertBlogPostRecordHasAllExpectedParamsExposed(
