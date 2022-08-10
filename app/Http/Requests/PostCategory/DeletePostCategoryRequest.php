@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests\PostCategory;
 
+use App\Http\Requests\AbstractGenericRequest;
 use App\Models\PostCategory;
-use Illuminate\Foundation\Http\FormRequest;
 
-class DeletePostCategoryRequest extends FormRequest
+class DeletePostCategoryRequest extends AbstractGenericRequest
 {
     /**
      * Get the validation rules that apply to the request.

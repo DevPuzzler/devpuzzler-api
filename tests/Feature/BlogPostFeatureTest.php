@@ -569,18 +569,23 @@ class BlogPostFeatureTest extends AbstractFeatureTest
 
     /**
      * Send empty JSON to see all required fields and check them
-     * TODO: Update it once response gets unified form
      */
     public function testUpsertBlogPostRequiresBlogPostData(): void
     {
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $this->post('/api/posts', [])
+        $this
+            ->post('/api/posts', [])
             ->assertUnprocessable()
-            ->assertJson( fn( AssertableJson $json) =>
-                $json->hasAll(['message', 'errors'])
+            ->assertJson( fn (AssertableJson $json) =>
+                $this
+                    ->assertResponseJsonContainsSuccessErrorDataParams($json)
+                    ->has(JsonResponseVO::PARAM_ERROR, fn (AssertableJson $json) =>
+                        $json->hasAll(...array_keys(self::MOCK_BLOG_POST))
+                    )
             );
+
     }
 
     protected function assertBlogPostRecordHasAllExpectedParamsExposed(

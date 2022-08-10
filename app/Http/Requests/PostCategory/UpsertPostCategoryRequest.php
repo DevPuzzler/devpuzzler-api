@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests\PostCategory;
 
+use App\Http\Requests\AbstractGenericRequest;
 use App\Models\PostCategory;
-use Illuminate\Foundation\Http\FormRequest;
 
-class UpsertPostCategoryRequest extends FormRequest
+class UpsertPostCategoryRequest extends AbstractGenericRequest
 {
     public function rules()
     {

@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests\BlogPost;
 
+use App\Http\Requests\AbstractGenericRequest;
 use App\Models\BlogPost;
-use Illuminate\Foundation\Http\FormRequest;
 
-class DeleteBlogPostRequest extends FormRequest
+class DeleteBlogPostRequest extends AbstractGenericRequest
 {
     public function rules(): array
     {

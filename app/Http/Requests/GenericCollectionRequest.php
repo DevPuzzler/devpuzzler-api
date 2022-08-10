@@ -3,10 +3,9 @@
 namespace App\Http\Requests;
 
 use App\Enums\CollectionParamsEnum as CollectionRules;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class GenericCollectionRequest extends FormRequest
+class GenericCollectionRequest extends AbstractGenericRequest
 {
     public function getCollectionRules(): array
     {
