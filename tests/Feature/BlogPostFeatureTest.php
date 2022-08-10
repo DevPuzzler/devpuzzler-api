@@ -6,11 +6,10 @@ use App\Enums\CollectionParamsEnum;
 use App\Interfaces\CQ\Queries\Query\BlogPost\BlogPostCollectionQueryInterface;
 use App\Models\BlogPost;
 use App\Models\PostCategory;
+use App\Models\User;
 use App\Tools\ValueObjects\Responses\JsonResponseVO;
 use Illuminate\Database\Eloquent\Factories\Sequence;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\Fluent\AssertableJson;
-use Symfony\Component\HttpFoundation\Response;
 
 class BlogPostFeatureTest extends AbstractFeatureTest
 {
@@ -18,6 +17,14 @@ class BlogPostFeatureTest extends AbstractFeatureTest
     public const MOCK_BLOG_POST_ID = 1;
     public const MOCK_LIMIT = 1;
     public const MOCK_OFFSET = 1;
+    public const MOCK_BLOG_POST = [
+        BlogPost::COLUMN_CATEGORY_ID => 1,
+        BlogPost::COLUMN_TITLE => 'title',
+        BlogPost::COLUMN_EXCERPT => 'excerpt',
+        BlogPost::COLUMN_CONTENT => '<h1>CONTENT</h1>',
+        BlogPost::COLUMN_IS_ACTIVE => 1,
+        BlogPost::COLUMN_IS_RESTRICTED => 0,
+    ];
 
     public function testGetSingleBlogPostByIdReturnsSingleBlogPost(): void
     {
@@ -522,6 +529,57 @@ class BlogPostFeatureTest extends AbstractFeatureTest
                         ->where(PostCategory::COLUMN_ID, $requestedCategoryId)
                     )
                 )
+            );
+    }
+
+    public function testUpsertBlogPostInsertsNewRecordWhenNonExistingAndReturnsId(): void
+    {
+        PostCategory::factory()->create([
+            PostCategory::COLUMN_ID => 1
+        ]);
+
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $this
+            ->post('/api/posts', self::MOCK_BLOG_POST)
+            ->assertCreated()
+            ->assertJson(fn (AssertableJson $json) =>
+            $this
+                ->assertResponseJsonContainsSuccessErrorDataParams($json)
+                ->has(JsonResponseVO::PARAM_DATA, fn ( AssertableJson $json ) =>
+                    $json->has(BlogPost::COLUMN_ID)
+                )
+        );
+    }
+
+    /**
+     * TODO: Update it once response gets unified form
+     */
+    public function testUpsertBlogPostRequiresAuthentication(): void
+    {
+        $this
+            ->post('/api/posts', self::MOCK_BLOG_POST)
+            ->assertUnauthorized()
+            ->assertJson( fn (AssertableJson $json) =>
+                $json->has('message')
+                ->where('message', 'Unauthenticated.')
+            );
+    }
+
+    /**
+     * Send empty JSON to see all required fields and check them
+     * TODO: Update it once response gets unified form
+     */
+    public function testUpsertBlogPostRequiresBlogPostData(): void
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $this->post('/api/posts', [])
+            ->assertUnprocessable()
+            ->assertJson( fn( AssertableJson $json) =>
+                $json->hasAll(['message', 'errors'])
             );
     }
 
