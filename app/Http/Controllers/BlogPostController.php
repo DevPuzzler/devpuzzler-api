@@ -48,7 +48,7 @@ class BlogPostController extends Controller
                         $request->validated( CollectionParamsEnum::SORT_ORDER->value ),
                         $request->validated( BlogPostCollectionQueryInterface::PARAM_INCLUDE_CATEGORY, false ),
                         $request->validated( BlogPost::COLUMN_CATEGORY_ID, false ),
-                        $request->validated( BlogPost::RELATION_TAGS, false ),
+                        $request->validated( BlogPost::RELATION_TAGS ),
                     )
                 )->toArray()
             );

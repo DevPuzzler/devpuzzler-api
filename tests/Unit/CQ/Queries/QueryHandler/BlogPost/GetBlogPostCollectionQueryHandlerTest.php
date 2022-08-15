@@ -354,7 +354,6 @@ class GetBlogPostCollectionQueryHandlerTest extends TestCase
         $blogPosts = $this->sut->__invoke($this->queryMock);
 
         $this->assertCount(0, $blogPosts);
-
     }
 
     private function seedOnly2BlogPostsWithSequence(array $firstRecordData, array $secondRecordData): void
