@@ -5,6 +5,7 @@ namespace App\CQ\Queries\QueryHandler\BlogPost;
 use App\Enums\CollectionParamsEnum;
 use App\Interfaces\CQ\Queries\Query\BlogPost\BlogPostCollectionQueryInterface;
 use App\Models\BlogPost;
+use App\Models\Tag;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -37,9 +38,15 @@ class GetBlogPostCollectionQueryHandler
             }
         }
 
-        return $blogPosts
-            ->with(BlogPost::RELATION_TAGS)
-            ->get();
+        $blogPosts->with(BlogPost::RELATION_TAGS);
+
+        if( ($tags = $query->getTags()) ) {
+            $blogPosts->whereRelation(BlogPost::RELATION_TAGS, function(Builder $q) use ($tags) {
+                $q->whereIn(Tag::COLUMN_NAME, $tags);
+            });
+        }
+
+        return $blogPosts->get();
     }
 
     public function addCategoryIdToQuery( Builder &$queryBuilder, BlogPostCollectionQueryInterface $query ): void

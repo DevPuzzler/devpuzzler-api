@@ -20,6 +20,7 @@ class BlogPostCollectionRequest extends GenericCollectionRequest
             ...$this->getCollectionRules(),
             BlogPostCollectionQueryInterface::PARAM_INCLUDE_CATEGORY => ['boolean'],
             BlogPost::COLUMN_CATEGORY_ID => ['int'],
+            BlogPost::RELATION_TAGS => ['string'],
         ];
     }
 }

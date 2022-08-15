@@ -11,4 +11,6 @@ interface BlogPostCollectionQueryInterface extends CollectionQueryInterface
     public function getIsIncludeCategory(): ?bool;
 
     public function getCategoryId(): ?int;
+
+    public function getTags(): ?array;
 }

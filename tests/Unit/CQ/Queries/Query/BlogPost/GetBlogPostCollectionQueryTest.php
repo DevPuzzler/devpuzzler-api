@@ -23,6 +23,7 @@ class GetBlogPostCollectionQueryTest extends CollectionQueryTest
 
         parent::testSutHasExpectedMethods();
         $this->assertTrue( method_exists( $this->sut, 'getIsIncludeCategory' ) );
+        $this->assertTrue( method_exists( $this->sut, 'getTags' ) );
     }
 
     public function testGetIsIncludeCategoryReturnsValueProvidedInConstructor(): void
@@ -59,6 +60,42 @@ class GetBlogPostCollectionQueryTest extends CollectionQueryTest
         $this->assertNull( $this->sut->getCategoryId() );
     }
 
+    public function testGetTagsReturnsArrayWithSingleItemWhenStringWithComaAtEndProvided(): void
+    {
+        $this->sut = $this->getSutInstance(
+            self::MOCK_LIMIT,
+            self::MOCK_OFFSET,
+            self::MOCK_ORDER_BY,
+            self::MOCK_SORT_ORDER,
+            true,
+            self::MOCK_CATEGORY_ID,
+            'test,'
+        );
+
+        $this->assertEquals(['test'], $this->sut->getTags());
+    }
+
+    public function testGetTagsReturnsArrayOf2ElemsWhenStringWith2ElemsProvided(): void
+    {
+        $this->sut = $this->getSutInstance(
+            self::MOCK_LIMIT,
+            self::MOCK_OFFSET,
+            self::MOCK_ORDER_BY,
+            self::MOCK_SORT_ORDER,
+            true,
+            self::MOCK_CATEGORY_ID,
+            'test1,test2'
+        );
+        $this->assertEquals(['test1', 'test2'], $this->sut->getTags());
+    }
+
+    public function testGetTagsReturnsNullWhenNoValueInConstructor(): void
+    {
+        $this->sut = $this->getSutInstance();
+
+        $this->assertNull($this->sut->getTags());
+    }
+
     protected function getSutInstance(
         ?int $limit = null,
         ?int $offset = null,
@@ -66,6 +103,7 @@ class GetBlogPostCollectionQueryTest extends CollectionQueryTest
         ?string $sortOrder = null,
         bool $isIncludeCategory = false,
         ?int $categoryId = null,
+        ?string $tags = null,
     ): GetBlogPostCollectionQuery {
         return new GetBlogPostCollectionQuery(
             $limit,
@@ -74,6 +112,7 @@ class GetBlogPostCollectionQueryTest extends CollectionQueryTest
             $sortOrder,
             $isIncludeCategory,
             $categoryId,
+            $tags,
         );
     }
 

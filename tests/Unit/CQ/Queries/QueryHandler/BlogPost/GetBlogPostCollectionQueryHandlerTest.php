@@ -6,7 +6,9 @@ use App\CQ\Queries\QueryHandler\BlogPost\GetBlogPostCollectionQueryHandler;
 use App\Enums\CollectionParamsEnum;
 use App\Interfaces\CQ\Queries\Query\BlogPost\BlogPostCollectionQueryInterface;
 use App\Models\BlogPost;
+use App\Models\BlogPostTag;
 use App\Models\PostCategory;
+use App\Models\Tag;
 use Carbon\Carbon;
 use Database\Seeders\BlogPostAndCategoriesSeeder;
 use Illuminate\Database\Eloquent\Collection;
@@ -262,6 +264,97 @@ class GetBlogPostCollectionQueryHandlerTest extends TestCase
         );
 
         $this->assertTrue( $firstBlogPostDate->gt($secondBlogPostDate) );
+    }
+
+    /**
+     * Seed tags via seeder, pick used tag from seeded blog post,
+     * check if all retrieved records have that tag
+     */
+    public function testCollectionReturnsBlogPostsWithRequestedTag(): void
+    {
+        $this->seed(BlogPostAndCategoriesSeeder::class);
+
+        // Fetch tag from one of seeded blog posts to make sure it is used
+        $existingTag = BlogPost::all()
+            ?->random()
+            ?->getAttribute(BlogPost::RELATION_TAGS)
+            ?->first()
+            ?->getAttribute('name');
+
+        if (!$existingTag) {
+            $this->fail('Could not find Tag. Check [BlogPostAndCategoriesSeeder] seeder.');
+        }
+
+        $this->queryMock
+            ->expects($this->once())
+            ->method('getTags')
+            ->willReturn([$existingTag]);
+
+        $blogPosts = $this->sut->__invoke($this->queryMock);
+
+        $blogPosts->each( function ( BlogPost $blogPost ) use ($existingTag) {
+            $this->assertTrue(
+                in_array(
+                    $existingTag,
+                    array_column($blogPost->tags()->get()->toArray(),
+                        Tag::COLUMN_NAME
+                    )
+                )
+            );
+        });
+    }
+
+    /**
+     * Fetch all tags seeded, pick 2 random ones.
+     * Fetch all blog posts for these 2 tags
+     * Intersect [tags] from blog post with 2 picked ones
+     * since it can be only one or both that match
+     */
+    public function testCollectionReturnsBlogPostWithRequestedMultipleTags(): void
+    {
+        $this->seed(BlogPostAndCategoriesSeeder::class);
+
+        $existingTags = [];
+        foreach( Tag::all() as $tag ) {
+            if ( !in_array($tag->getAttribute(Tag::COLUMN_NAME), $existingTags) ) {
+                $existingTags[] = $tag->getAttribute(Tag::COLUMN_NAME);
+            }
+
+            if ( 2 === count($existingTags) ) {
+                break;
+            }
+        }
+
+        $this->queryMock
+            ->expects($this->once())
+            ->method('getTags')
+            ->willReturn($existingTags);
+
+        $blogPosts = $this->sut->__invoke($this->queryMock);
+
+        $blogPosts->each( function ( BlogPost $blogPost ) use ($existingTags) {
+            $this->assertNotEmpty(
+                array_intersect(
+                    array_column($blogPost->tags()->get()->toArray(), Tag::COLUMN_NAME),
+                    $existingTags
+                )
+            );
+        });
+    }
+
+    public function testCollectionReturnsNoBlogPostsWhenRequestedNonMatchingTag(): void
+    {
+        $this->seed(BlogPostAndCategoriesSeeder::class);
+        $tag = '123fpiwfifow@#!';
+        $this->queryMock
+            ->expects($this->once())
+            ->method('getTags')
+            ->willReturn([$tag]);
+
+        $blogPosts = $this->sut->__invoke($this->queryMock);
+
+        $this->assertCount(0, $blogPosts);
+
     }
 
     private function seedOnly2BlogPostsWithSequence(array $firstRecordData, array $secondRecordData): void

@@ -14,6 +14,7 @@ class GetBlogPostCollectionQuery extends AbstractCollectionQuery implements Blog
         ?string $sortOrder = null,
         private readonly bool $isIncludeCategory = false,
         private readonly ?int $categoryId = null,
+        private readonly ?string $tags = null,
     ) {
         parent::__construct( $limit, $offset, $orderBy, $sortOrder );
     }
@@ -26,5 +27,10 @@ class GetBlogPostCollectionQuery extends AbstractCollectionQuery implements Blog
     public function getCategoryId(): ?int
     {
         return $this->categoryId;
+    }
+
+    public function getTags(): ?array
+    {
+        return $this->tags ? array_filter( explode(',', $this->tags) ) : null;
     }
 }

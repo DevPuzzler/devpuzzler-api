@@ -18,7 +18,7 @@ class TagFactory extends Factory
     public function definition()
     {
         return [
-            Tag::TABLE_NAME => $this->faker->unique()->monthName(),
+            Tag::COLUMN_NAME => $this->faker->unique()->monthName(),
         ];
     }
 }
