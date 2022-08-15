@@ -62,7 +62,7 @@ class GetPostCategoryCollectionQueryHandlerTest extends TestCase
 
         $postCategories = $this->sut->__invoke($this->queryMock);
 
-        $this->assertArrayNotHasKey('blog_posts', $postCategories->first()->toArray());
+        $this->assertArrayNotHasKey(PostCategory::RELATION_BLOG_POSTS, $postCategories->first()->toArray());
     }
 
     public function testPostCategoriesContainBlogPostsWhenIncludeBlogPostsParamTrue(): void
@@ -230,7 +230,7 @@ class GetPostCategoryCollectionQueryHandlerTest extends TestCase
         $postCategories = $this->sut->__invoke($this->queryMock);
         $postCategories->each( function (PostCategory $postCategory) {
             $this->assertTrue(
-                $postCategory->getRelation(PostCategory::COLUMN_BLOG_POSTS)->count() <= 1
+                $postCategory->getRelation(PostCategory::RELATION_BLOG_POSTS)->count() <= 1
             );
             return true;
         });
@@ -251,7 +251,7 @@ class GetPostCategoryCollectionQueryHandlerTest extends TestCase
         $postCategories->map(function (PostCategory $postCategory) {
             $this->assertCount(
                 self::POSTS_NUMBER,
-                $postCategory->getRelation(PostCategory::COLUMN_BLOG_POSTS)
+                $postCategory->getRelation(PostCategory::RELATION_BLOG_POSTS)
             );
             return true;
         });
@@ -279,7 +279,7 @@ class GetPostCategoryCollectionQueryHandlerTest extends TestCase
                         ]
                     )
                 ),
-                PostCategory::COLUMN_BLOG_POSTS
+                PostCategory::RELATION_BLOG_POSTS
             )->create();
     }
 }

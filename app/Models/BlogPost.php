@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -21,6 +22,9 @@ class BlogPost extends Model
     public const COLUMN_IS_ACTIVE = 'is_active';
     public const COLUMN_IS_RESTRICTED = 'is_restricted';
     public const COLUMN_DELETED_AT = 'deleted_at';
+
+    public const RELATION_TAGS = 'tags';
+    public const RELATION_CATEGORY = 'category';
 
     protected $fillable = [
         self::COLUMN_TITLE,
@@ -40,6 +44,16 @@ class BlogPost extends Model
             PostCategory::class,
             PostCategory::COLUMN_ID,
             self::COLUMN_CATEGORY_ID
+        );
+    }
+
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Tag::class,
+            BlogPostTag::TABLE_NAME,
+            BlogPostTag::COLUMN_BLOG_POST_ID,
+            BlogPostTag::COLUMN_TAG_ID
         );
     }
 }

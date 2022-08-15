@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\PostCategory;
+use App\Models\Tag;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,12 +12,11 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create(PostCategory::TABLE_NAME, function (Blueprint $table) {
+        Schema::create(Tag::TABLE_NAME, function (Blueprint $table) {
             $table->id();
-            $table->string(PostCategory::COLUMN_NAME)->unique()->nullable(false);
-            $table->tinyText(PostCategory::COLUMN_DESCRIPTION)->nullable(false);
+            $table->string(Tag::COLUMN_NAME)->nullable(false)->unique();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -28,8 +27,8 @@ return new class extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
-        Schema::dropIfExists(PostCategory::TABLE_NAME);
+        Schema::dropIfExists(Tag::TABLE_NAME);
     }
 };

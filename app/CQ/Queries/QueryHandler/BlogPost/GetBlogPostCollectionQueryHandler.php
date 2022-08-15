@@ -13,7 +13,7 @@ class GetBlogPostCollectionQueryHandler
     public function __invoke( BlogPostCollectionQueryInterface $query ): Collection
     {
         if ( $query->getIsIncludeCategory() ) {
-            $blogPosts = BlogPost::with('category');
+            $blogPosts = BlogPost::with(BlogPost::RELATION_CATEGORY);
         } else {
             $blogPosts = BlogPost::where([]);
         }
@@ -37,7 +37,9 @@ class GetBlogPostCollectionQueryHandler
             }
         }
 
-        return $blogPosts->get();
+        return $blogPosts
+            ->with(BlogPost::RELATION_TAGS)
+            ->get();
     }
 
     public function addCategoryIdToQuery( Builder &$queryBuilder, BlogPostCollectionQueryInterface $query ): void

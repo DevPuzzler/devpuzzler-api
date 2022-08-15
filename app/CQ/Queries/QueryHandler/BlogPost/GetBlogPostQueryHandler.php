@@ -7,7 +7,8 @@ use App\Models\BlogPost;
 
 class GetBlogPostQueryHandler
 {
-    public function __invoke(GetBlogPostQuery $query) {
-        return BlogPost::findOrFail($query->getId());
+    public function __invoke(GetBlogPostQuery $query): BlogPost
+    {
+        return BlogPost::with(BlogPost::RELATION_TAGS)->findOrFail( $query->getId() );
     }
 }

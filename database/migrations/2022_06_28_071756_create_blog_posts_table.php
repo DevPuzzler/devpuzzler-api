@@ -10,7 +10,7 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('blog_posts', function (Blueprint $table) {
+        Schema::create(BlogPost::TABLE_NAME, function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger(BlogPost::COLUMN_CATEGORY_ID);
             $table->string(BlogPost::COLUMN_TITLE)->nullable(false)->unique();
@@ -24,12 +24,12 @@ return new class extends Migration
             $table
                 ->foreign(BlogPost::COLUMN_CATEGORY_ID)
                 ->references(PostCategory::COLUMN_ID)
-                ->on('post_categories');
+                ->on(PostCategory::TABLE_NAME);
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('blog_posts');
+        Schema::dropIfExists(BlogPost::TABLE_NAME);
     }
 };

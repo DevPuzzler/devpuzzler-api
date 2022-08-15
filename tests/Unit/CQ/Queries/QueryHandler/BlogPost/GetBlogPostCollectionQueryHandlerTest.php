@@ -279,7 +279,7 @@ class GetBlogPostCollectionQueryHandlerTest extends TestCase
                         $firstRecordData,
                         $secondRecordData
                     )),
-                PostCategory::COLUMN_BLOG_POSTS
+                PostCategory::RELATION_BLOG_POSTS
             )->create();
     }
 

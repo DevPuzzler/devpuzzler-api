@@ -368,7 +368,7 @@ class BlogPostFeatureTest extends AbstractFeatureTest
                 ->has(JsonResponseVO::PARAM_DATA, 2, fn (AssertableJson $json) =>
                     $this
                         ->assertBlogPostRecordHasAllExpectedParamsExposed($json)
-                        ->has('category', fn(AssertableJson $json) =>
+                        ->has(BlogPost::RELATION_CATEGORY, fn(AssertableJson $json) =>
                             $json->hasAll([
                                 PostCategory::COLUMN_ID,
                                 PostCategory::COLUMN_NAME,
@@ -519,7 +519,7 @@ class BlogPostFeatureTest extends AbstractFeatureTest
                 $this
                     ->assertBlogPostRecordHasAllExpectedParamsExposed($json)
                     ->where(BlogPost::COLUMN_CATEGORY_ID, $requestedCategoryId)
-                    ->has('category', fn(AssertableJson $json) =>
+                    ->has(BlogPost::RELATION_CATEGORY, fn(AssertableJson $json) =>
                         $json->hasAll([
                             PostCategory::COLUMN_ID,
                             PostCategory::COLUMN_NAME,
@@ -607,8 +607,8 @@ class BlogPostFeatureTest extends AbstractFeatureTest
                 )
             );
         $this->assertDatabaseHas(BlogPost::TABLE_NAME, [
-            'title' => $blogPost->getAttribute(BlogPost::COLUMN_TITLE),
-            'content' => $blogPost->getAttribute(BlogPost::COLUMN_CONTENT),
+            BlogPost::COLUMN_TITLE => $blogPost->getAttribute(BlogPost::COLUMN_TITLE),
+            BlogPost::COLUMN_CONTENT => $blogPost->getAttribute(BlogPost::COLUMN_CONTENT),
         ]);
     }
 
@@ -626,6 +626,7 @@ class BlogPostFeatureTest extends AbstractFeatureTest
                 BlogPost::COLUMN_IS_RESTRICTED,
                 BlogPost::CREATED_AT,
                 BlogPost:: UPDATED_AT,
+                BlogPost::RELATION_TAGS,
             ]);
     }
 
