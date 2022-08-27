@@ -43,7 +43,8 @@ class GetPostCategoryCollectionQueryHandler
                                     BlogPost::COLUMN_ID,
                                     BlogPost::COLUMN_CATEGORY_ID,
                                     BlogPost::COLUMN_TITLE,
-                                    BlogPost::COLUMN_EXCERPT
+                                    BlogPost::COLUMN_EXCERPT,
+                                    BlogPost::CREATED_AT,
                                 ])
                                 ->where([
                                     BlogPost::COLUMN_IS_ACTIVE => 1,
